@@ -7,10 +7,10 @@ var db = new Sequelize('divvy', 'root', '', {
     max: 5,
     min: 0,
     idle: 10000
-  },
+  }
 }); // name, username, password
 
-Sequelize
+db
   .authenticate()
   .then(function(err) {
     console.log('Connection has been established successfully.');
