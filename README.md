@@ -30,29 +30,17 @@ __Express__ - Selected to assist with server-side routing.
 4. [Team](#team)
 5. [Contributing](#contributing)
 
-## Usage
+## Usage (tbd)
 
 > Some usage instructions
 
-## Requirements
+## Requirements (tbd)
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
 
 ## Development
 
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-sudo npm install -g bower
-npm install
-bower install
-```
+### Installing Dependencies (tbd)
 
 ### Roadmap
 
