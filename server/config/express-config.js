@@ -15,8 +15,6 @@ export default app => {
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(cookieParser());
 
-  
-
   // TO DO: express-session
 
 }
