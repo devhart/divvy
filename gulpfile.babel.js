@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import lazypipe from 'lazypipe';
@@ -22,8 +23,8 @@ const addLabel = {
 };
 
 const lintServer = lazypipe()
-  .pipe(plugins.jshint, './.jshintrc')
-  .pipe(plugins.jshint.reporter, 'jshint-stylish');
+  .pipe(plugins.eslint, 'server/.eslintrc')
+  .pipe(plugins.eslint.format);
 
 const transpileServer = lazypipe()
   .pipe(plugins.sourcemaps.init)
@@ -39,7 +40,8 @@ gulp.task('transpile:server', () => {
 });
 
 gulp.task('lint:server', () => {
-  return gulp.src(paths.server.scripts)
+  return gulp.src(_.union(paths.server.scripts, ['!server/index.js']))
+    // Brick on failure to be super strict
     .pipe(lintServer());
 });
 
