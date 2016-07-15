@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/devhart/divvy.png?label=ready&title=Ready)](https://waffle.io/devhart/divvy)
 # divvy
 
 #### Hack Reactor Greenfield Project - Expense Splitting App
