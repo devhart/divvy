@@ -28,6 +28,7 @@
     "eslint-plugin-react": "^5.2.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-env": "^0.4.0",
     "gulp-eslint": "^3.0.1",
     "gulp-livereload": "^3.8.1",
     "gulp-load-plugins": "^1.2.4",
@@ -42,7 +43,6 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
-    "dotenv": "^2.0.0",
     "eslint-config-airbnb": "^9.0.1",
     "express": "^4.14.0",
     "morgan": "^1.7.0"

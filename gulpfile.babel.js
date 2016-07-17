@@ -8,10 +8,34 @@ import runSequence from 'run-sequence';
 const plugins = gulpLoadPlugins();
 const paths = {
   server: {
-    scripts: ['server/**/*.js']
+    scripts: ['server/**/*.js', '!**/.env.*', '!server/index.js']
   },
   dist: 'dist'
 };
+
+gulp.task('env:all', () => {
+  let localConfig;
+  try {
+    localConfig = require('server/config/.env');
+  } catch (e) {
+    localConfig = {};
+  }
+  plugins.env({
+    vars: localConfig
+  });
+});
+
+gulp.task('env:test', () => {
+  plugins.env({
+    vars: {NODE_ENV: 'test'}
+  });
+});
+
+gulp.task('env:prod', () => {
+  plugins.env({
+    vars: {NODE_ENV: 'production'}
+  });
+});
 
 const addLabel = {
   server: log => {
@@ -40,9 +64,8 @@ gulp.task('transpile:server', () => {
 });
 
 gulp.task('lint:server', () => {
-  return gulp.src(_.union(paths.server.scripts, ['!server/index.js']))
-    // Brick on failure to be super strict
-    .pipe(lintServer());
+  return gulp.src(paths.server.scripts)
+    .pipe(lintServer())
 });
 
 gulp.task('start:server', () => {
@@ -58,7 +81,8 @@ gulp.task('watch', () => {
 });
 
 gulp.task('default', cb => {
-  runSequence(['lint:server'],
+  runSequence(['env:all'],
+    ['lint:server'],
     ['start:server'],
     'watch',
     cb);
