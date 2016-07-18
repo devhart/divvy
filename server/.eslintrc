@@ -1,4 +1,16 @@
 {
   "extends": "airbnb",
-  "envs": ["node"]
+  "envs": [
+    "node"
+  ],
+  "rules": {
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptions": [
+          "Router"
+        ]
+      }
+    ]
+  }
 }
