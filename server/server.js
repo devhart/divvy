@@ -2,11 +2,13 @@
 import 'babel-polyfill';
 
 import configExpress from './config/express-config';
+import configRoutes from './routes';
 import express from 'express';
 
 const app = express();
 
 configExpress(app);
+configRoutes(app);
 
 app.get( '/', (req, res) => res.send('Hello World!') );
 

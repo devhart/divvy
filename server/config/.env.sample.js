@@ -5,5 +5,5 @@ export default {
   SESSION_SECRET: 'session-secret',
 
   FACEBOOK_ID: 'facebook-id',
-  FACEBOOK_SECRET: 'facebook-secret'
+  FACEBOOK_SECRET: 'facebook-secret',
 };
