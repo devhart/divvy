@@ -1,4 +1,4 @@
 angular.module('poolApp', [])
-.controller('poolCtrl', function($scope) {
+.controller('poolCtrl', function($scope, $state) {
 
 });
