@@ -4,7 +4,7 @@
   "description": "payment dividing application",
   "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp test",
     "start": "gulp"
   },
   "repository": {
