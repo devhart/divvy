@@ -10,10 +10,10 @@ const paths = {
   server: {
     scripts: ['server/**/!(*.spec).js', '!**/.env.*', '!server/index.js'],
     tests: {
-      unit: ['server/**/*.spec.js']
-    }
+      unit: ['server/**/*.spec.js'],
+    },
   },
-  dist: 'dist'
+  dist: 'dist',
 };
 
 gulp.task('env:all', () => {
@@ -23,20 +23,21 @@ gulp.task('env:all', () => {
   } catch (e) {
     localConfig = {};
   }
+
   plugins.env({
-    vars: localConfig
+    vars: localConfig,
   });
 });
 
 gulp.task('env:test', () => {
   plugins.env({
-    vars: {NODE_ENV: 'test'}
+    vars: { NODE_ENV: 'test' },
   });
 });
 
 gulp.task('env:prod', () => {
   plugins.env({
-    vars: {NODE_ENV: 'production'}
+    vars: { NODE_ENV: 'production' },
   });
 });
 
@@ -46,7 +47,7 @@ const addLabel = {
       plugins.util.colors.yellow('nodemon') +
       plugins.util.colors.white('] ') +
       log.message);
-  }
+  },
 };
 
 const lintServer = lazypipe()
@@ -57,13 +58,13 @@ const mocha = lazypipe()
   .pipe(plugins.mocha, {
     reporter: 'spec',
     timeout: 5000,
-    require: ['./mocha.conf']
+    require: ['./mocha.conf'],
   });
 
 const transpileServer = lazypipe()
   .pipe(plugins.sourcemaps.init)
   .pipe(plugins.babel, {
-    presets: ['es2015']
+    presets: ['es2015'],
   })
   .pipe(plugins.sourcemaps.write, '.');
 
@@ -79,15 +80,15 @@ gulp.task('lint:server', () => {
 });
 
 gulp.task('start:server', () => {
-  nodemon(`-w server server`).on('log', addLabel['server']);
+  nodemon(`-w server server`).on('log', addLabel.server);
 });
 
 gulp.task('watch', () => {
-  plugins.livereload.listen();
+  plugins.refresh.listen();
   plugins.watch(_.union(paths.server.scripts, paths.server.tests.unit))
     .pipe(plugins.plumber())
     .pipe(lintServer())
-    .pipe(plugins.livereload());
+    .pipe(plugins.refresh());
 });
 
 gulp.task('test', cb => {
@@ -108,9 +109,9 @@ gulp.task('mocha:unit', () => {
 });
 
 gulp.task('default', cb => {
-  runSequence(['env:all'],
-    ['lint:server'],
-    ['start:server'],
+  runSequence('env:all',
+    'lint:server',
+    'start:server',
     'watch',
     cb);
 });
