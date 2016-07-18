@@ -56,7 +56,8 @@ const lintServer = lazypipe()
 const mocha = lazypipe()
   .pipe(plugins.mocha, {
     reporter: 'spec',
-    timeout: 5000
+    timeout: 5000,
+    require: ['./mocha.conf']
   });
 
 const transpileServer = lazypipe()
