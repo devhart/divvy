@@ -6,37 +6,37 @@ angular.module('app', ['ui.router'])
 	$stateProvider
 	.state('loginState', {
 		url: '/login',
-		urlTemplate: '/components/login/login.html'
+		templateUrl: './app/components/login/login.html'
 		//Placeholder for LOGIN CONTROLLER (if needed)
 	})
 	.state('poolsState', {
 		url: '/pools',
-		urlTemplate: '/components/pools/pools.html'
+		templateUrl: './app/components/pools/pools.html'
 		//Add Controller - controller: 'poolsCtrl'
 	})
 	.state('newPoolState', {
 		url: '/newPool',
-		urlTemplate: '/components/newpool/newpool.html'
+		templateUrl: './app/components/newpool/newpool.html'
 		//Add Controller - controller: 'newPoolCtrl'
 	})
 	.state('updatePoolState', {
 		url: '/updatePool',
-		urlTemplate: '/components/updatepool/updatepool.html'
+		templateUrl: './app/components/updatepool/updatepool.html'
 		//Add Controller - controller: 'updatePoolCtrl'
 	})
 	.state('poolState', {
 		url: '/pool',
-		urlTemplate: '/components/pool/pool.html'
-		//Add Controller - controller: 'poolCtrl'
+		templateUrl: './app/components/pool/pool.html'
+		// controller: 'poolCtrl'
 	})
 	.state('newExpensesState', {
 		url: '/newExpense',
-		urlTemplate: '/components/newExpenses/newExpenses.html'
+		templateUrl: './app/components/newExpenses/newExpenses.html'
 		//Add Controller - controller: 'newExpensesCtrl'
 	})
 	.state('updateExpensesState', {
 		url: '/updateExpense',
-		urlTemplate: '/components/updateExpenses/updateExpenses.html'
+		templateUrl: './app/components/updateExpenses/updateExpenses.html'
 		//Add Controller - controller: 'updateExpensesCtrl'
 	})
 
