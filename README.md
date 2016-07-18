@@ -7,6 +7,8 @@ Divvying up expenses between friends and peers can be a disaster. Remember that 
 
 Divvy allows users to enter expenses as they are incurred, and calculates the best way to settle the bill. No more painful math and messy payments to different people, Divvy simplifies everything down to one payment per person.
 
+[![Build Status](https://travis-ci.org/devhart/divvy.svg?branch=master)](https://travis-ci.org/devhart/divvy.svg?branch=master)
+
 ## Team
 
   - __Product Owner__: [Hannah Henderson](https://github.com/hchsquared)
