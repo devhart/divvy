@@ -8,37 +8,10 @@ import runSequence from 'run-sequence';
 const plugins = gulpLoadPlugins();
 const paths = {
   server: {
-    scripts: ['server/**/!(*.spec).js', '!**/.env.*', '!server/index.js'],
-    tests: {
-      unit: ['server/**/*.spec.js']
-    }
+    scripts: ['server/**/*.js']
   },
   dist: 'dist'
 };
-
-gulp.task('env:all', () => {
-  let localConfig;
-  try {
-    localConfig = require('server/config/.env');
-  } catch (e) {
-    localConfig = {};
-  }
-  plugins.env({
-    vars: localConfig
-  });
-});
-
-gulp.task('env:test', () => {
-  plugins.env({
-    vars: {NODE_ENV: 'test'}
-  });
-});
-
-gulp.task('env:prod', () => {
-  plugins.env({
-    vars: {NODE_ENV: 'production'}
-  });
-});
 
 const addLabel = {
   server: log => {
@@ -52,13 +25,6 @@ const addLabel = {
 const lintServer = lazypipe()
   .pipe(plugins.eslint, 'server/.eslintrc')
   .pipe(plugins.eslint.format);
-
-const mocha = lazypipe()
-  .pipe(plugins.mocha, {
-    reporter: 'spec',
-    timeout: 5000,
-    require: ['./mocha.conf']
-  });
 
 const transpileServer = lazypipe()
   .pipe(plugins.sourcemaps.init)
@@ -74,7 +40,8 @@ gulp.task('transpile:server', () => {
 });
 
 gulp.task('lint:server', () => {
-  return gulp.src(_.union(paths.server.scripts, paths.server.tests.unit))
+  return gulp.src(_.union(paths.server.scripts, ['!server/index.js']))
+    // Brick on failure to be super strict
     .pipe(lintServer());
 });
 
@@ -84,32 +51,14 @@ gulp.task('start:server', () => {
 
 gulp.task('watch', () => {
   plugins.livereload.listen();
-  plugins.watch(_.union(paths.server.scripts, paths.server.tests.unit))
+  plugins.watch(paths.server.scripts)
     .pipe(plugins.plumber())
     .pipe(lintServer())
     .pipe(plugins.livereload());
 });
 
-gulp.task('test', cb => {
-  runSequence('test:server', cb);
-});
-
-gulp.task('test:server', cb => {
-  runSequence(
-    'env:all',
-    'env:test',
-    'mocha:unit',
-    cb);
-});
-
-gulp.task('mocha:unit', () => {
-  return gulp.src(paths.server.tests.unit)
-    .pipe(mocha());
-});
-
 gulp.task('default', cb => {
-  runSequence(['env:all'],
-    ['lint:server'],
+  runSequence(['lint:server'],
     ['start:server'],
     'watch',
     cb);
