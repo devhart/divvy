@@ -9,10 +9,8 @@ export default (User, config) => {
     profileFields: ['displayName', 'emails'],
   };
 
-  const handler = (accessToken, refreshToken, profile, done) => {
-    console.log(profile);
-    done();
-  };
+  // TODO: Create or lookup user based on facebook response.
+  const handler = (accessToken, refreshToken, profile, done) => done();
 
   passport.use(new FacebookStrategy(settings, handler));
 };

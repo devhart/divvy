@@ -10,11 +10,10 @@ export default app => {
 
   // TO DO: app.use(express.static(app.get('clientPath')));
 
-  app.use(bodyParser.json())
+  app.use(bodyParser.json());
 
-  app.use(bodyParser.urlencoded({extended: false}));
+  app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
 
   // TO DO: express-session
-
-}
+};
