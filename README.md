@@ -15,10 +15,16 @@ Divvy allows users to enter expenses as they are incurred, and calculates the be
 
 ## Tech Stack
 
-__Angular__ - Selected because the group is prioritizing readability & easy debugging. The app may be reviewed by another group as a legacy project.
-__Sequelize__ - Selected to define app data relationships.
-__Gulp__ - Selected to automate & simplify long processes.
-__Express__ - Selected to assist with server-side routing.
+### Server
+  - __Node__ - v6.3.0
+  - __Sequelize__ - ORM for defining app data relationships and managing queries.
+  - __Express__ - Server with convenient routing and large collection of middleware packages to handle requests.
+  
+### Client
+  - __Angular__ - MV* framework to build readable, maintainable, and testable client interface to our app. The app may be reviewed by another group as a legacy project.
+
+### Development tools
+  - __Gulp__ - Task runner to automate and simplify development, build, and deployment processes.
 
 ## Table of Contents
 
@@ -36,7 +42,7 @@ __Express__ - Selected to assist with server-side routing.
 
 ## Requirements (tbd)
 
-- Node 0.10.x
+- Node 6.3.0
 
 ## Development
 
