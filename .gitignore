@@ -145,4 +145,4 @@ bower_components
 ### Divvy ###
 build/
 dist/
-.env.js
+.env
