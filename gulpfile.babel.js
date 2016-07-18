@@ -8,7 +8,10 @@ import runSequence from 'run-sequence';
 const plugins = gulpLoadPlugins();
 const paths = {
   server: {
-    scripts: ['server/**/*.js', '!**/.env.*', '!server/index.js']
+    scripts: ['server/**/!(*.spec).js', '!**/.env.*', '!server/index.js'],
+    tests: {
+      unit: ['server/**/*.spec.js']
+    }
   },
   dist: 'dist'
 };
@@ -50,6 +53,12 @@ const lintServer = lazypipe()
   .pipe(plugins.eslint, 'server/.eslintrc')
   .pipe(plugins.eslint.format);
 
+const mocha = lazypipe()
+  .pipe(plugins.mocha, {
+    reporter: 'spec',
+    timeout: 5000
+  });
+
 const transpileServer = lazypipe()
   .pipe(plugins.sourcemaps.init)
   .pipe(plugins.babel, {
@@ -64,8 +73,8 @@ gulp.task('transpile:server', () => {
 });
 
 gulp.task('lint:server', () => {
-  return gulp.src(paths.server.scripts)
-    .pipe(lintServer())
+  return gulp.src(_.union(paths.server.scripts, paths.server.tests.unit))
+    .pipe(lintServer());
 });
 
 gulp.task('start:server', () => {
@@ -74,10 +83,27 @@ gulp.task('start:server', () => {
 
 gulp.task('watch', () => {
   plugins.livereload.listen();
-  plugins.watch(paths.server.scripts)
+  plugins.watch(_.union(paths.server.scripts, paths.server.tests.unit))
     .pipe(plugins.plumber())
     .pipe(lintServer())
     .pipe(plugins.livereload());
+});
+
+gulp.task('test', cb => {
+  runSequence('test:server', cb);
+});
+
+gulp.task('test:server', cb => {
+  runSequence(
+    'env:all',
+    'env:test',
+    'mocha:unit',
+    cb);
+});
+
+gulp.task('mocha:unit', () => {
+  return gulp.src(paths.server.tests.unit)
+    .pipe(mocha());
 });
 
 gulp.task('default', cb => {
