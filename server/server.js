@@ -11,8 +11,6 @@ const app = express();
 configExpress(app);
 configRoutes(app);
 
-app.get('/', (req, res) => res.send('Hello World!'));
-
 db.sync()
   .then(() => {
     app.listen(app.get('port'), app.get('ip'), () => {

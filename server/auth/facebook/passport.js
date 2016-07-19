@@ -10,8 +10,23 @@ export default (User, config) => {
   };
 
   const handler = (accessToken, refreshToken, profile, done) => {
-    console.log(profile);
-    done();
+    User.find({ where: { facebookId: profile.id } })
+      .then(user => {
+        if (user) {
+          return done(null, user);
+        }
+
+        const newUser = User.build({
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          facebookId: profile.id,
+          facebook: profile._json,
+        });
+        return newUser.save()
+          .then(createdUser => done(null, createdUser))
+          .catch(err => done(err));
+      })
+      .catch(err => done(err));
   };
 
   passport.use(new FacebookStrategy(settings, handler));

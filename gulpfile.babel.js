@@ -19,7 +19,7 @@ const paths = {
 gulp.task('env:all', () => {
   let localConfig;
   try {
-    localConfig = require('server/config/.env');
+    localConfig = require('./server/config/.env').default;
   } catch (e) {
     localConfig = {};
   }
