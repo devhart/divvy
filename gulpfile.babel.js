@@ -50,8 +50,12 @@ const addLabel = {
   },
 };
 
-const lintServer = lazypipe()
+const lintServerScripts = lazypipe()
   .pipe(plugins.eslint, 'server/.eslintrc')
+  .pipe(plugins.eslint.format);
+
+const lintServerTests = lazypipe()
+  .pipe(plugins.eslint, 'server/.eslintrc-spec')
   .pipe(plugins.eslint.format);
 
 const mocha = lazypipe()
@@ -74,9 +78,16 @@ gulp.task('transpile:server', () => {
     .pipe(gulp.dest(`${paths.dist}/server`));
 });
 
-gulp.task('lint:server', () => {
-  return gulp.src(_.union(paths.server.scripts, paths.server.tests.unit))
-    .pipe(lintServer());
+gulp.task('lint:server', ['lint:server:scripts', 'lint:server:tests']);
+
+gulp.task('lint:server:scripts', () => {
+  return gulp.src(paths.server.scripts)
+    .pipe(lintServerScripts());
+});
+
+gulp.task('lint:server:tests', () => {
+  return gulp.src(paths.server.tests.unit)
+    .pipe(lintServerTests());
 });
 
 gulp.task('start:server', () => {
@@ -85,9 +96,14 @@ gulp.task('start:server', () => {
 
 gulp.task('watch', () => {
   plugins.refresh.listen();
-  plugins.watch(_.union(paths.server.scripts, paths.server.tests.unit))
+  plugins.watch(paths.server.scripts)
     .pipe(plugins.plumber())
-    .pipe(lintServer())
+    .pipe(lintServerScripts())
+    .pipe(plugins.refresh());
+
+  plugins.watch(paths.server.tests.unit)
+    .pipe(plugins.plumber())
+    .pipe(lintServerTests())
     .pipe(plugins.refresh());
 });
 
