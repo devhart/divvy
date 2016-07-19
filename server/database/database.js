@@ -38,7 +38,8 @@ const ExpensePools = db.define('ExpensePools', {
   paid: Sequelize.DATE,
   closed: Sequelize.BOOLEAN,
 });
-ExpensePools.hasOne(Users, { foreignKey: 'entered_by' });
+ExpensePools.hasOne(Users, { foreignKey: 'entered_by_id' });
+Users.belongsTo(ExpensePools, { foreignKey: 'entered_by_id' });
 
 // MODEL: EXPENSES
 // Individual line-item item expenses
@@ -50,23 +51,25 @@ const Expenses = db.define('Expenses', {
 });
 ExpensePools.hasMany(Expenses, { foreignKey: 'exp_pool_id' });
 Expenses.belongsTo(ExpensePools, { foreignKey: 'exp_pool_id' });
+
 Expenses.hasOne(Users, { foreignKey: 'paid_by_id' });
 Expenses.hasOne(Users, { foreignKey: 'entered_by_id' });
+Users.belongsTo(Expenses);
 
-// ExpensePools_Users
-Users.belongsToMany(ExpensePools, { as: 'Users', through: 'ExpensePools_Users', foreignKey: 'user_id' });
+// MODEL: ExpensePools_Users
 ExpensePools.belongsToMany(Users, { as: 'ExpensePools', through: 'ExpensePools_Users', foreignKey: 'epool_id' });
+Users.belongsToMany(ExpensePools, { as: 'Users', through: 'ExpensePools_Users', foreignKey: 'user_id' });
 
 // MODEL: USERSEXPENSES
 // Users assigned to a single line-item expense
 // e.g. expense 'stag dinner' has three users, all of whom are also tied
 //      to 'car rental' and one of whom is listed on 'booze'
-const UsersExpenses = db.define('UserExpenses', {
+const UsersExpenses = db.define('UsersExpenses', {
   paid: Sequelize.DATE,
   percent: Sequelize.INTEGER,
 });
-// Users.belongsToMany(Expenses, { as: 'Users', through: 'UsersExpenses', foreignKey: 'user_id' });
-// Expenses.belongsToMany(Users, { as: 'Expenses', through: 'UsersExpenses', foreignKey: 'expense_id' });
+Expenses.belongsToMany(Users, { as: 'Expenses', through: 'UsersExpenses', foreignKey: 'expense_id' });
+Users.belongsToMany(Expenses, { as: 'Users', through: 'UsersExpenses', foreignKey: 'user_id' });
 
 
 module.exports = db;
