@@ -1,1 +1,39 @@
-<h1> You made it! </h1>
+<h2> Sample Pool: Snack Party </h2>
+
+
+<h3> Total amount owed for pool </h3>
+
+
+<table border= 5 WIDTH="100%"   CELLPADDING="4" CELLSPACING="3" >
+
+	<tr>
+	<th width= 5% > Edit </th>
+	<th width= 40%> Expense </th>
+	<th width= 5% > Amount </th>
+	<th width= 5% > Participated? </th>
+
+	</tr>
+
+	<tr ng-repeat= "item in expenses track by $index">
+	<td>
+	<button> Edit Expense</button>
+	</td>
+
+	<td>
+	{{item.expense}} 
+	</td>
+
+	<td>
+	{{item.amount}} 
+	</td>
+
+	<td>
+	<button ng-click= "participateClick(item.participated, $index)" style= "background-color:grey"> 
+	{{item.participated}} </button>
+	
+	</td>
+
+	</tr>
+</table>
+
+
