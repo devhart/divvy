@@ -1,14 +1,7 @@
-const Sequelize = require('sequelize');
-const db = new Sequelize('divvy', 'root', null, {
-  host: 'localhost',
-  dialect: 'mysql',
-  freezeTableName: true,
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000,
-  },
-});
+import config from '../config/environment';
+import Sequelize from 'sequelize';
+
+const db = new Sequelize(config.sequelize.uri, config.sequelize.options);
 
 // TO DO:
 //   1) Confirm Facebook user id data type
@@ -39,7 +32,7 @@ const ExpensePools = db.define('ExpensePools', {
   closed: Sequelize.BOOLEAN,
 });
 ExpensePools.hasOne(Users, { foreignKey: 'entered_by_id' });
-Users.belongsTo(ExpensePools, {foreignKey: 'entered_by_id'});
+Users.belongsTo(ExpensePools, { foreignKey: 'entered_by_id' });
 
 // MODEL: EXPENSES
 // Individual line-item item expenses
@@ -70,6 +63,5 @@ const UsersExpenses = db.define('UsersExpenses', {
 });
 Expenses.belongsToMany(Users, { as: 'Expenses', through: 'UsersExpenses', foreignKey: 'expense_id' });
 Users.belongsToMany(Expenses, { as: 'Users', through: 'UsersExpenses', foreignKey: 'user_id' });
-
 
 module.exports = db;
