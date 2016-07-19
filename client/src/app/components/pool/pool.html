@@ -7,33 +7,36 @@
 <table border= 5 WIDTH="100%"   CELLPADDING="4" CELLSPACING="3" >
 
 	<tr>
-	<th width= 5% > Edit </th>
+	<th width= 5% > </th>
 	<th width= 40%> Expense </th>
-	<th width= 5% > Amount </th>
+	<th width= 5% > Amount Owed </th>
 	<th width= 5% > Participated? </th>
-
 	</tr>
 
 	<tr ng-repeat= "item in expenses track by $index">
 	<td>
-	<button> Edit Expense</button>
+		<button> Edit Expense</button>
 	</td>
 
 	<td>
-	{{item.expense}} 
+		{{item.expense}} 
 	</td>
 
 	<td>
-	{{item.amount}} 
+		{{item.amount}} 
 	</td>
 
 	<td>
-	<button ng-click= "participateClick(item.participated, $index)" style= "background-color:grey"> 
-	{{item.participated}} </button>
-	
+		<div style= "text-align:center">
+		<button ng-click= "participateClick(item.participated, $index)" style= "background-color:grey"> 
+		{{item.participated}} </button>
+		</div>
 	</td>
-
 	</tr>
-</table>
 
+</table>
+<br>
+<div style= "text-align:center">
+<button ng-click = "toAddExpense()" style="height:50px;width:100px; background-color: yellow"> Add Expense</button>
+</div>
 
