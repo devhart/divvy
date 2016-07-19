@@ -35,8 +35,10 @@ Expenses.hasOne(User, { foreignKey: 'entered_by_id' });
 User.belongsTo(Expenses);
 
 // MODEL: ExpensePools_User
-ExpensePools.belongsToMany(User, { as: 'ExpensePools', through: 'ExpensePools_User', foreignKey: 'epool_id' });
-User.belongsToMany(ExpensePools, { as: 'User', through: 'ExpensePools_User', foreignKey: 'user_id' });
+ExpensePools.belongsToMany(User,
+{ as: 'ExpensePools', through: 'ExpensePools_User', foreignKey: 'epool_id' });
+User.belongsToMany(ExpensePools,
+{ as: 'User', through: 'ExpensePools_User', foreignKey: 'user_id' });
 
 // MODEL: UserEXPENSES
 // User assigned to a single line-item expense
@@ -48,6 +50,6 @@ const UserExpenses = db.define('UserExpenses', {
 });
 Expenses.belongsToMany(User, { as: 'Expenses', through: 'UserExpenses', foreignKey: 'expense_id' });
 User.belongsToMany(Expenses, { as: 'User', through: 'UserExpenses', foreignKey: 'user_id' });
-*/
 
+*/
 export default db;

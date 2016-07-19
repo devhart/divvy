@@ -18,4 +18,4 @@ export default function User(sequelize, DataTypes) {
     },
     facebook: DataTypes.JSON,
   });
-};
+}
