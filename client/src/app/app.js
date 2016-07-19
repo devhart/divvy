@@ -1,4 +1,4 @@
-angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp', 'newPoolApp', 'updatePoolApp'])
+angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'updateExpenseApp', 'poolsApp', 'newPoolApp', 'updatePoolApp'])
 .config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/login');
@@ -44,9 +44,13 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp', 'new
 		}
 	})
 	.state('updateExpensesState', {
-		url: '/pool/:id/updateExpense',
-		templateUrl: './app/components/updateExpenses/updateExpenses.html'
-		//Add Controller - controller: 'updateExpensesCtrl'
+		url: '/pool/:poolid/updateExpense/:expenseid',
+		templateUrl: './app/components/updateExpenses/updateExpenses.html',
+		controller: 'updateExpensesCtrl',
+		params: {
+			poolid: null,
+			expenseid: null
+		}
 	})
 })
 .factory('db', function(){

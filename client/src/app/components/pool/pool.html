@@ -1,8 +1,8 @@
 <div ng-init="filterToPool()">
-<h2> Sample Pool: Snack Party </h2>
+<h2> {{pool.name}} </h2>
 
 
-<h3> Total amount owed for pool </h3>
+<h3> Total amount owed: {{pool.total}} </h3>
 
 
 <table border= 5 WIDTH="100%"   CELLPADDING="4" CELLSPACING="3" >
@@ -14,23 +14,23 @@
 	<th width= 5% > Participated? </th>
 	</tr>
 
-	<tr ng-repeat= "item in expenses track by $index">
+	<tr ng-repeat= "expense in expenses track by $index">
 	<td>
-		<button> Edit Expense</button>
+		<button ng-click="toEditExpense(expense.id)"> Edit Expense</button>
 	</td>
 
 	<td>
-		{{item.name}} 
+		{{expense.name}} 
 	</td>
 
 	<td>
-		{{item.amount}} 
+		{{expense.amount}} 
 	</td>
 
 	<td>
 		<div style= "text-align:center">
-		<button ng-click= "participateClick(item.participated, $index)" style= "background-color:grey"> 
-		{{item.participated}} </button>
+		<button ng-click= "participateClick(expense.participated, $index)" style= "background-color:grey"> 
+		{{expense.participated}} </button>
 		</div>
 	</td>
 	</tr>
@@ -40,5 +40,9 @@
 <div style= "text-align:center">
 <button ng-click = "toAddExpense()" style="height:50px;width:100px; background-color: yellow"> Add Expense</button>
 </div>
+
+<a ui-sref= 'poolsState'> To Pools</a>
+
 </div>
+
 
