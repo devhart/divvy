@@ -1,19 +1,19 @@
 const controller = {};
 
 controller.getUserPoolExpenses = (req, res) => {
-  res.send(`getUserPoolExpenses ${req.id}, ${req['exp-pool-id']}`);
+  res.send(`getUserPoolExpenses ${req.params.id}, ${req.params['exp-pool-id']}`);
 };
 
 controller.getUserPools = (req, res) => {
-  res.send(`getUserPools for user id: ${req.id}`);
+  res.send(`getUserPools for user id: ${req.params.id}`);
 };
 
 controller.getUserExpenses = (req, res) => {
-  res.send(`getUserExpenses for user id: ${req.id}`);
+  res.send(`getUserExpenses for user id: ${req.params.id}`);
 };
 
 controller.getUser = (req, res) => {
-  res.send(`getUser for user id: ${req.id}`);
+  res.send(`getUser for user id: ${req.params.id}`);
 };
 
 controller.addUserExpense = (req, res) => {
