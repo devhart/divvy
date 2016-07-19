@@ -1,8 +1,7 @@
 import express from 'express';
 import controller from './expense.controller';
-import itemRouter from express.Router({ mergeParams: true });
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // POST => add an expense to a specific pool
 router.post('/', controller.addExpense);
