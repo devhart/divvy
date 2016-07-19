@@ -16,7 +16,7 @@ controller.editExpense = (req, res) => {
 
 // GET => specific expense
 controller.getOneExpense = (req, res) => {
-  res.send('getOneExpense with expenseId: ' + req.params.expenseId);
+  res.send(`getOneExpense with expenseId: ${req.params.expenseId}`);
 };
 
 export default controller;
