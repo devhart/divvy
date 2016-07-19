@@ -14,13 +14,11 @@ angular.module('poolApp', [])
 	};
 
 	$scope.toAddExpense = function () {
-		$state.go('newExpensesState');
+		$state.go('newExpensesState', {id: $stateParams.id});
 	};
 
 	$scope.filterToPool = function () {
-		console.log($stateParams)
 		for (var i =0; i < db.pools.length; i++) {
-			console.log('db.pools', db.pools[i].id)
 			if (db.pools[i].id === +$stateParams.id) {
 				$scope.expenses = db.pools[i].expenses;
 			}

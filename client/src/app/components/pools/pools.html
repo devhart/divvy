@@ -11,7 +11,7 @@
 
     <tr ng-repeat= "pool in pools track by $index">
       <td>
-        <button> Edit Expense</button>
+        <button ng-click="editPool(pool.id)"> Edit Pool</button>
       </td>
       <td>
         {{pool.name}} 
@@ -19,8 +19,8 @@
       <td>
         {{pool.status}} 
       </td>
-      <td ng-click="goToPool(pool.id)">
-        Details
+      <td>
+        <a href="" ng-click="goToPool(pool.id)">See Details</a>
       </td>
     </tr>
   </table>

@@ -1,7 +1,7 @@
-angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp'])
+angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp', 'newPoolApp', 'updatePoolApp'])
 .config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/login');
 
 	$stateProvider
 	.state('loginState', {
@@ -16,13 +16,16 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp'])
 	})
 	.state('newPoolState', {
 		url: '/newPool',
-		templateUrl: './app/components/newpool/newpool.html'
-		//Add Controller - controller: 'newPoolCtrl'
+		templateUrl: './app/components/newpool/newpool.html',
+		controller: 'newPoolCtrl'
 	})
 	.state('updatePoolState', {
-		url: '/updatePool',
-		templateUrl: './app/components/updatepool/updatepool.html'
-		//Add Controller - controller: 'updatePoolCtrl'
+		url: '/updatePool/:id',
+		templateUrl: './app/components/updatepool/updatepool.html',
+		controller: 'updatePoolCtrl',
+		params: {
+			id: null
+		}
 	})
 	.state('poolState', {
 		url: '/pool/:id',
@@ -33,12 +36,15 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp'])
 		}
 	})
 	.state('newExpensesState', {
-		url: '/newExpense',
+		url: '/pool/:id/newExpense',
 		templateUrl: './app/components/newExpenses/newExpenses.html',
-		controller: 'newExpensesCtrl'
+		controller: 'newExpensesCtrl',
+		params: {
+			id: null
+		}
 	})
 	.state('updateExpensesState', {
-		url: '/updateExpense',
+		url: '/pool/:id/updateExpense',
 		templateUrl: './app/components/updateExpenses/updateExpenses.html'
 		//Add Controller - controller: 'updateExpensesCtrl'
 	})
@@ -50,17 +56,20 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp'])
 	obj.pools[0] = {
 		id: 1,
 		name: 'Wine Tour',
-		open: true,
+		status: 'open',
+		createdBy: 1,
 		expenses: [{
 			id: 1,
 			name: 'Napkins', 
 			amount: 15,
+			createdBy: 1,
 			participated: "yes"
 		},
 		{
 			id: 2,
 			name: 'Cups',
 			amount: 25,
+			createdBy: 1,
 			participated: "yes"
 		}]
 	};		
