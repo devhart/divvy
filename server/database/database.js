@@ -39,7 +39,7 @@ const ExpensePools = db.define('ExpensePools', {
   closed: Sequelize.BOOLEAN,
 });
 ExpensePools.hasOne(Users, { foreignKey: 'entered_by_id' });
-Users.belongsTo(ExpensePools, { foreignKey: 'entered_by_id' });
+Users.belongsTo(ExpensePools, {foreignKey: 'entered_by_id'});
 
 // MODEL: EXPENSES
 // Individual line-item item expenses
