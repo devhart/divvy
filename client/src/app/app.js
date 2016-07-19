@@ -1,4 +1,4 @@
-angular.module('app', ['poolApp', 'ui.router'])
+angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp'])
 .config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/');
@@ -31,8 +31,8 @@ angular.module('app', ['poolApp', 'ui.router'])
 	})
 	.state('newExpensesState', {
 		url: '/newExpense',
-		templateUrl: './app/components/newExpenses/newExpenses.html'
-		//Add Controller - controller: 'newExpensesCtrl'
+		templateUrl: './app/components/newExpenses/newExpenses.html',
+		controller: 'newExpensesCtrl'
 	})
 	.state('updateExpensesState', {
 		url: '/updateExpense',
