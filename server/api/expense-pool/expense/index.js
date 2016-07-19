@@ -9,8 +9,8 @@ router.post('/', controller.addExpense);
 router.get('/', controller.getExpenses);
 
 // POST => update a specific expense
-router.post('/:id', controller.addExpense);
+router.post('/:expenseId', controller.editExpense);
 // GET => specific expense
-router.get('/:id', controller.getExpenses);
+router.get('/:expenseId', controller.getOneExpense);
 
 export default router;
