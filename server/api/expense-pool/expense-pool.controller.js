@@ -4,7 +4,7 @@ controller.addPool = (req, res) => {
   // create statement
   // grab data from request body
   // sendStatus response
-  res.sendStatus('addPool');
+  res.send('addPool');
 };
 
 controller.getPool = (req, res) => {
