@@ -49,14 +49,13 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
-    "eslint-config-airbnb": "^9.0.1",
     "express": "^4.14.0",
     "lodash": "^4.13.1",
-    "express-generator": "^4.13.4",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
-    "sequelize": "^3.23.4"
+    "sequelize": "^3.23.4",
+    "sqlite3": "^3.1.4"
   },
   "engines": {
     "node": "6.3.0"

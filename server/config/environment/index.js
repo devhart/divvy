@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import path from 'path';
+
 import development from './development';
 import test from './test';
 import production from './production';
@@ -12,6 +14,7 @@ const baseSettings = {
   env: process.env.NODE_ENV,
   port: process.env.PORT || 3000,
   ip: process.env.IP || '0.0.0.0',
+  root: path.normalize(`${__dirname}/../../..`),
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'id',
     clientSecret: process.env.FACEBOOK_SECRET || 'secret',

@@ -146,4 +146,4 @@ bower_components
 build/
 dist/
 .env.js
-.sqlite
+*.sqlite
