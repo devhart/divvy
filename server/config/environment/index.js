@@ -15,6 +15,9 @@ const baseSettings = {
   port: process.env.PORT || 3000,
   ip: process.env.IP || '0.0.0.0',
   root: path.normalize(`${__dirname}/../../..`),
+  secrets: {
+    session: process.env.SESSION_SECRET || 'session-secret',
+  },
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'id',
     clientSecret: process.env.FACEBOOK_SECRET || 'secret',

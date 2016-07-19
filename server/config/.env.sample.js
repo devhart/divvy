@@ -1,6 +1,6 @@
 export default {
   NODE_ENV: 'development',
-  DOMAIN: 'http://localhost:9000',
+  DOMAIN: 'http://localhost:3000',
 
   SESSION_SECRET: 'session-secret',
 
