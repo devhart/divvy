@@ -1,3 +1,4 @@
+<div ng-init="filterToPool()">
 <h2> Sample Pool: Snack Party </h2>
 
 
@@ -19,7 +20,7 @@
 	</td>
 
 	<td>
-		{{item.expense}} 
+		{{item.name}} 
 	</td>
 
 	<td>
@@ -38,5 +39,6 @@
 <br>
 <div style= "text-align:center">
 <button ng-click = "toAddExpense()" style="height:50px;width:100px; background-color: yellow"> Add Expense</button>
+</div>
 </div>
 

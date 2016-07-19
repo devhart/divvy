@@ -1,4 +1,4 @@
-angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp'])
+angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'poolsApp'])
 .config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/');
@@ -11,8 +11,8 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp'])
 	})
 	.state('poolsState', {
 		url: '/pools',
-		templateUrl: './app/components/pools/pools.html'
-		//Add Controller - controller: 'poolsCtrl'
+		templateUrl: './app/components/pools/pools.html',
+		controller: 'poolsCtrl'
 	})
 	.state('newPoolState', {
 		url: '/newPool',
@@ -25,9 +25,12 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp'])
 		//Add Controller - controller: 'updatePoolCtrl'
 	})
 	.state('poolState', {
-		url: '/pool',
+		url: '/pool/:id',
 		templateUrl: './app/components/pool/pool.html',
-		controller: 'poolCtrl'
+		controller: 'poolCtrl',
+		params: {
+			id: null
+		}
 	})
 	.state('newExpensesState', {
 		url: '/newExpense',
@@ -39,10 +42,28 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp'])
 		templateUrl: './app/components/updateExpenses/updateExpenses.html'
 		//Add Controller - controller: 'updateExpensesCtrl'
 	})
+})
+.factory('db', function(){
+	var obj = {};
 
+	obj.pools = [];
+	obj.pools[0] = {
+		id: 1,
+		name: 'Wine Tour',
+		open: true,
+		expenses: [{
+			id: 1,
+			name: 'Napkins', 
+			amount: 15,
+			participated: "yes"
+		},
+		{
+			id: 2,
+			name: 'Cups',
+			amount: 25,
+			participated: "yes"
+		}]
+	};		
 
-
-
-
-
-});
+	return obj;
+})

@@ -1,6 +1,8 @@
 angular.module('newExpenseApp', [])
-.controller('newExpensesCtrl', function($scope, $state) {
+.controller('newExpensesCtrl', function($scope, $state, db) {
 
+  $scope.currentPool = '';
+  
   $scope.toPool = function () {
     $state.go('poolState');
   };
