@@ -54,7 +54,7 @@ strSQL = "SELECT * FROM users WHERE user_id = " + user_id + ";";
 strSQL = "SELECT * FROM expenses INNER JOIN users_expenses ON expenses.expense_id = users_expenses.expense_id WHERE user_id = " + user_id + ";";
 
 // /api/users/:id/users-expense-pools
-strSQL = "elect * from expense_pools INNER JOIN expense_pools_users ON expense_pools.epool_id = expense_pools_users.epool_id WHERE user_id = " + user_id + ";";
+strSQL = "Select * from expense_pools INNER JOIN expense_pools_users ON expense_pools.epool_id = expense_pools_users.epool_id WHERE user_id = " + user_id + ";";
 
 // TODO: Find friends
 //       Facebook API?
