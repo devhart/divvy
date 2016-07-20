@@ -5,10 +5,11 @@ import { isAuthenticated } from '../../auth/auth.service';
 
 const router = express.Router();
 
-router.use('/:id/expenses', expenseRouter);
-
 // POST => add a new pool
 router.post('/', isAuthenticated(), controller.addPool);
+
+// ------------ Routes above have updated controllers ----------------
+
 // GET => show all pools
 // Added for testing only
 router.get('/test', controller.getPools);
@@ -23,5 +24,7 @@ router.post('/:id/users/:userId', controller.addUserToPool);
 router.get('/:id', controller.getPool);
 // POST => update a specific pool
 router.post('/:id', controller.updatePool);
+
+router.use('/:id/expenses', expenseRouter);
 
 export default router;
