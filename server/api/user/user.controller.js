@@ -1,7 +1,7 @@
 const controller = {};
 
 controller.getUserPoolExpenses = (req, res) => {
-  res.send(`getUserPoolExpenses ${req.params.id}, ${req.params['exp-pool-id']}`);
+  res.send(`getUserPoolExpenses ${req.params.id}, ${req.params.expPoolId}`);
 };
 
 controller.getUserPools = (req, res) => {
@@ -27,4 +27,5 @@ controller.addUserToPool = (req, res) => {
 controller.addUser = (req, res) => {
   res.send('addUser');
 };
+
 export default controller;

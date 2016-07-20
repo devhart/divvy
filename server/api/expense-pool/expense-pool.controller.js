@@ -7,7 +7,7 @@ controller.addPool = (req, res) => {
     description: 'trying to input a value',
     closed: false,
   }, ['name', 'description', 'closed'])
-  .then((expensePool) => {
+  .then(expensePool => {
     res.send(expensePool.get({
       plain: true,
     }));
