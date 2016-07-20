@@ -1,0 +1,30 @@
+<div>
+  <h2>Pools for your Mules</h2>
+  <table border= 5 WIDTH="100%"   CELLPADDING="4" CELLSPACING="3" >
+
+    <tr>
+      <th width= 5% > </th>
+      <th width= 40%> Name </th>
+      <th width= 10% > Status </th>
+      <th width= 10% > </th>
+    </tr>
+
+    <tr ng-repeat= "pool in pools track by $index">
+      <td>
+        <button ng-click="editPool(pool.id)"> Edit Pool</button>
+      </td>
+      <td>
+        {{pool.name}} 
+      </td>
+      <td>
+        {{pool.status}} 
+      </td>
+      <td>
+        <a href="" ng-click="goToPool(pool.id)">See Details</a>
+      </td>
+    </tr>
+  </table>
+  <div style= "text-align:center">
+    <button ng-click = "addPool()" style="height:50px;width:100px; background-color: yellow"> Add Pool</button>
+  </div>
+</div>

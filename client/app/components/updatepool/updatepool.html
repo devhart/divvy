@@ -1,0 +1,19 @@
+<div ng-init="filterToPool()">  
+
+  <h2> Update Pool:</h2>
+
+  <img src="{{pool.image}}">
+
+  <form>
+    <input ng-model="pool.name" type="text" placeholder="{{pool.name}}"/>
+    <input ng-model="pool.image" type="text" placeholder="{{pool.image}}"></input>
+    <button ng-click="editPool()" style="width:100px; background-color: yellow"> Update Pool</button>
+    <button ng-click="deletePool()" style="margin-left: 50px;width:100px; background-color: red"> Delete</button>
+    <br>
+    <br>
+    <button ng-click="toPools()" style="height:50px;width:100px; background-color: grey"> Back</button>
+  </form>
+
+  <div style= "text-align:center">
+  </div>
+</div>
