@@ -5,6 +5,9 @@
 
 <h3> Total amount owed: {{pool.total}} </h3>
 
+<button ng-click = "toAddExpense()" style="height:50px;width:100px; background-color: yellow"> Add Expense</button>
+<br>
+<br>
 
 <table border= 5 WIDTH="100%"   CELLPADDING="4" CELLSPACING="3" >
 
@@ -37,11 +40,9 @@
 	</tr>
 
 </table>
-<br>
 <div style= "text-align:center">
-<button ng-click = "toAddExpense()" style="height:50px;width:100px; background-color: yellow"> Add Expense</button>
 </div>
-
+<br>
 <a ui-sref= 'poolsState'> To Pools</a>
 
 </div>
