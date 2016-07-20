@@ -4,6 +4,7 @@
     "mocha": true,
   },
   "rules": {
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "no-return-assign": 0,
   }
 }
