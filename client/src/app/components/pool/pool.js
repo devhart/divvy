@@ -1,8 +1,8 @@
 angular.module('poolApp', [])
-.controller('poolCtrl', function($scope, $state) {
+.controller('poolCtrl', function($scope, $state, db, $stateParams) {
 
-	$scope.expenses = [{expense: 'salad/salad dressing', amount: 10, participated: "yes"}, {expense: 'chips & salsa', amount: 20, participated: "yes"}, 
-	{expense: 'hotdog supplies', amount: 30, participated: "yes"}];
+	$scope.expenses = [];
+	$scope.pool = {};
 
 	$scope.participateClick = function (participated, index) {
 		if(participated === "yes") {
@@ -13,7 +13,25 @@ angular.module('poolApp', [])
 	};
 
 	$scope.toAddExpense = function () {
-		$state.go('newExpensesState');
+		$state.go('newExpensesState', {id: $stateParams.id});
+	};
+
+	$scope.toEditExpense = function (id) {
+		$state.go('updateExpensesState', {poolid: $stateParams.id, expenseid: id });
+	};
+
+	$scope.filterToPool = function () {
+		for (var i =0; i < db.pools.length; i++) {
+			if (db.pools[i].id === +$stateParams.id) {
+				$scope.pool = db.pools[i];
+				$scope.pool.total = 0;
+				$scope.expenses = db.pools[i].expenses;
+				for (var j = 0; j < db.pools[i].expenses.length; j++) {
+				$scope.pool.total += +db.pools[i].expenses[j].amount;
+					
+				}
+			}
+		}		
 	};
 
 });
