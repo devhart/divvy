@@ -8,6 +8,8 @@ router.use('/:id/expenses', expenseRouter);
 
 // POST => add a new pool
 router.post('/', controller.addPool);
+// GET => show all pools
+router.get('/', controller.getPools);
 
 // POST => Add user to pool
 router.post('/:id/users/:userId', controller.addUserToPool);
