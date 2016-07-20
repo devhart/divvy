@@ -1,11 +1,19 @@
+import { ExpensePool } from '../../database/database';
 const controller = {};
 
 controller.addPool = (req, res) => {
-  // create statement
-  // grab data from request body
-  // sendStatus response
-  res.send('addPool');
+  ExpensePool.create({
+    name: 'test1',
+    description: 'trying to input a value',
+    closed: false,
+  }, ['name', 'description', 'closed'])
+  .then((expensePool) => {
+    res.send(expensePool.get({
+      plain: true,
+    }));
+  });
 };
+
 
 controller.getPool = (req, res) => {
   // find information

@@ -4,7 +4,8 @@ import Sequelize from 'sequelize';
 const db = new Sequelize(config.sequelize.uri, config.sequelize.options);
 
 export const User = db.import('../api/user/user.model');
-
+export const ExpensePool = db.import('../api/expense-pool/expense-pool.model');
+export const Expense = db.import('../api/expense-pool/expense/expense.model');
 /*
 // MODEL: EXPENSE POOLS
 // Pool / Category of expenses, e.g. 'Trip to Rome'

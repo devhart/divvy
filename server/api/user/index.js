@@ -4,6 +4,7 @@ const router = express.Router();
 // TODO: Verify user-id with token
 
 // GET => all user expenses for selected pool
+// Cannot GET /api/users/5/expense-pools-users/4/expenses
 router.get('/:id/expense-pools-users/:exp-pool-id/expenses',
             controller.getUserPoolExpenses);
 
@@ -27,4 +28,3 @@ router.post('/:id', controller.addUser);
 
 export default router;
 
-// Cannot GET /api/users/5/expense-pools-users/4/expenses
