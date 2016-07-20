@@ -1,23 +1,29 @@
 import { Expense } from '../../../database/database';
-
+import { ExpensePool } from '../../../database/database';
 const controller = {};
 
 controller.addExpense = (req, res) => {
-  Expense.create({
-    name: 'dummy expense',
-    description: 'test posting',
-    amount: 40.52,
-    paid: false,
-  }, ['name', 'description', 'amount', 'paid'])
-  .then(expense => {
-    res.send(expense.get({
-      plain: true,
-    }));
-  })
-  .catch(error => {
-    console.log(error);
-    res.sendStatus(500);
-  });
+  const epoolId = req.body.epoolId || 1;
+  ExpensePool.findById(epoolId)
+    .then(expensePool => {
+      expensePool.addExpense(
+        Expense.create({
+          name: 'dummy expense',
+          description: 'test posting',
+          amount: 40.52,
+          paid: false,
+        }, ['name', 'description', 'amount', 'paid'])
+        .then(expense => {
+          res.send(expense.get({
+            plain: true,
+          }));
+        })
+        .catch(error => {
+          console.log(error);
+          res.sendStatus(500);
+        })
+      );
+    });
 };
 
 // GET => All expenses
