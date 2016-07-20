@@ -24,10 +24,10 @@ angular.module('poolApp', [])
 		for (var i =0; i < db.pools.length; i++) {
 			if (db.pools[i].id === +$stateParams.id) {
 				$scope.pool = db.pools[i];
-				$scope.expenses = db.pools[i].expenses;
 				$scope.pool.total = 0;
+				$scope.expenses = db.pools[i].expenses;
 				for (var j = 0; j < db.pools[i].expenses.length; j++) {
-				$scope.pool.total += db.pools[i].expenses[j].amount;
+				$scope.pool.total += +db.pools[i].expenses[j].amount;
 					
 				}
 			}
