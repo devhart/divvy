@@ -1,4 +1,4 @@
-import { ExpensePool } from '../../database/database';
+import { ExpensePool, User } from '../../database/database';
 
 const controller = {};
 
@@ -22,10 +22,7 @@ controller.addPool = (req, res) => {
 };
 
 controller.getPool = (req, res) => {
-  ExpensePool.findAll({
-    where: { _id: req.params.id },
-    raw: true,
-  })
+  ExpensePool.findById(req.params.id)
   .then(expensePool => {
     res.send(expensePool);
   })
@@ -35,6 +32,7 @@ controller.getPool = (req, res) => {
   });
 };
 
+// Used in testing
 controller.getPools = (req, res) => {
   ExpensePool.findAll({
     raw: true,
@@ -73,7 +71,16 @@ controller.updatePool = (req, res) => {
 controller.addUserToPool = (req, res) => {
   // TODO: Set correct User-Pool ownership in models
   // TODO: Correct the route to this controller - fails currently
-  res.send(`addUserToPool where pool is: ${req.params.id} and user is: ${req.params.userId}`);
+  ExpensePool.findById(req.body.id)
+    .then(expensePool => {
+      expensePool.addUser(
+        User.findById(req.body.userId)
+        .catch(error => {
+          console.log(error);
+          res.sendStatus(500);
+        })
+      );
+    });
 };
 
 export default controller;

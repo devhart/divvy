@@ -1,8 +1,9 @@
 import { Expense, ExpensePool } from '../../../database/database';
 const controller = {};
 
+// TODO: MOVE TO EXPENSE-POOL CONTROLLER
 controller.addExpense = (req, res) => {
-  const epoolId = req.body.epoolId || 1;
+  const epoolId = req.body.epoolId || 1; // default to 1 for testing
   ExpensePool.findById(epoolId)
     .then(expensePool => {
       expensePool.addExpense(
@@ -43,7 +44,7 @@ controller.getExpenses = (req, res) => {
 // TODO: FIX ME!
 // POST => update a specific expense
 controller.editExpense = (req, res) => {
-  const epoolId = req.body.epoolId || 1;
+  const epoolId = req.body.epoolId || 1;  // default to 1 for testing
   ExpensePool.findById(epoolId)
     .then(expensePool => {
       expensePool.setExpense(
