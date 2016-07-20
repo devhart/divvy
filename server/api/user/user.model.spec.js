@@ -15,17 +15,18 @@ describe('User Model', () => {
     return User.findAll().should.eventually.have.length(0);
   });
 
-  describe('#create', () => {
+  describe('Constraints', () => {
     it('should build and save a new User', () => {
-      const user = { name: 'Fake User', email };
-      return User.create(user).then(created => {
-        created.should.have.property('_id');
-        created.name.should.equal(user.name);
-        created.email.should.equal(user.email);
-        return User.findById(created._id).then(found => {
-          found._id.should.equal(created._id);
-          found.name.should.equal(created.name);
-          found.email.should.equal(created.email);
+      const userRecord = { name: 'Fake User', email };
+      return User.create(userRecord).then(user => {
+        user.should.have.property('_id');
+        user._id.should.not.be.null;
+        user.name.should.equal(userRecord.name);
+        user.email.should.equal(userRecord.email);
+        return User.findById(user._id).then(found => {
+          found._id.should.equal(user._id);
+          found.name.should.equal(user.name);
+          found.email.should.equal(user.email);
         });
       });
     });
