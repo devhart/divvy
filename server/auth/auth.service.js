@@ -20,7 +20,7 @@ export const accessTokenHeader = (req, res, next) => {
 };
 
 /**
- * Turns the req.user after validateJwt from just an object with an _id
+ * Converts the req.user after validateJwt from just an object with an _id
  * property to a full User instance looked up from the database.
  */
 const populateReqUser = (req, res, next) => {

@@ -5,15 +5,16 @@ const controller = {};
 controller.addPool = (req, res) => {
   // TODO: Update create object's values
   //       To be taken from req.body object
-  ExpensePool.create({
-    name: 'test1',
-    description: 'trying to input a value',
-    closed: false,
-  }, ['name', 'description', 'closed'])
+  const obj = {};
+  ExpensePool.create(req.body, ['name', 'description', 'imgUrl'])
   .then(expensePool => {
-    res.send(expensePool.get({
-      plain: true,
-    }));
+    obj.expensePool = expensePool;
+    return expensePool.addUser(req.user);
+  })
+  .then(expensePoolUsers => {
+    console.log('expensePoolUsers', JSON.stringify(expensePoolUsers));
+    obj.expensePoolUsers = expensePoolUsers;
+    res.json(obj);
   })
   .catch(error => {
     console.log(error);

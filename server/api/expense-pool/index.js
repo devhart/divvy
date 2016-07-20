@@ -1,13 +1,14 @@
 import express from 'express';
 import controller from './expense-pool.controller';
 import expenseRouter from './expense';
+import { isAuthenticated } from '../../auth/auth.service';
 
 const router = express.Router();
 
 router.use('/:id/expenses', expenseRouter);
 
 // POST => add a new pool
-router.post('/', controller.addPool);
+router.post('/', isAuthenticated(), controller.addPool);
 // GET => show all pools
 // Added for testing only
 router.get('/test', controller.getPools);
