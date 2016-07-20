@@ -3,16 +3,16 @@ const controller = {};
 
 // TODO: MOVE TO EXPENSE-POOL CONTROLLER
 controller.addExpense = (req, res) => {
-  const epoolId = req.body.epoolId || 1; // default to 1 for testing
-  ExpensePool.findById(epoolId)
+  ExpensePool.findById(req.params.id)
     .then(expensePool => {
       expensePool.addExpense(
         Expense.create({
-          name: 'dummy expense',
-          description: 'test posting',
-          amount: 40.52,
+          name: 'more data',
+          description: 'yes',
+          amount: 655.67,
           paid: false,
-        }, ['name', 'description', 'amount', 'paid'])
+          ExpensePoolId: req.params.ExpensPoolId,
+        }, ['name', 'description', 'amount', 'paid', 'ExpensePoolId'])
         .then(expense => {
           res.send(expense.get({
             plain: true,

@@ -55,7 +55,7 @@ controller.updatePool = (req, res) => {
       description: 'new description',
     },
     {
-      where: { _id: req.body.id },
+      where: { _id: req.params.id },
     })
   .then(expensePool => {
     res.send(expensePool.get({
