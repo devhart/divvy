@@ -1,5 +1,4 @@
-import { Expense } from '../../../database/database';
-import { ExpensePool } from '../../../database/database';
+import { Expense, ExpensePool } from '../../../database/database';
 const controller = {};
 
 controller.addExpense = (req, res) => {
@@ -41,34 +40,38 @@ controller.getExpenses = (req, res) => {
   });
 };
 
+// TODO: FIX ME!
 // POST => update a specific expense
 controller.editExpense = (req, res) => {
-  Expense.update(
-    {
-      name: 'new updated EXPENSE name',
-      description: 'new description',
-    },
-    {
-      where: { _id: req.body.id },
-    })
-  .then(expense => {
-    res.send(expense.get({
-      plain: true,
-    }));
-  })
-  .catch(error => {
-    console.log(error);
-    res.sendStatus(500);
-  });
-  res.send('editExpense');
+  const epoolId = req.body.epoolId || 1;
+  ExpensePool.findById(epoolId)
+    .then(expensePool => {
+      expensePool.setExpense(
+        Expense.update(
+          {
+            name: 'new updated EXPENSE name',
+            description: 'new description',
+          },
+          {
+            where: { _id: req.body.id },
+          })
+        .then(expense => {
+          res.send(expense.get({
+            plain: true,
+          }));
+        })
+        .catch(error => {
+          console.log(error);
+          res.sendStatus(500);
+        })
+      );
+    });
 };
 
 // GET => specific expense
 controller.getOneExpense = (req, res) => {
-  Expense.findAll({
-    where: { _id: req.params.expenseId },
-    raw: true,
-  })
+  const expenseId = req.params.expenseId;
+  Expense.findById(expenseId)
   .then(expenses => {
     res.send(expenses);
   })
