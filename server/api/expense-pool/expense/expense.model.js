@@ -1,4 +1,4 @@
-export default function User(sequelize, DataTypes) {
+export default function Expense(sequelize, DataTypes) {
   return sequelize.define('Expense', {
     _id: {
       type: DataTypes.INTEGER,

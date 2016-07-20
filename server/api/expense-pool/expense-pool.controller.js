@@ -27,4 +27,8 @@ controller.updatePool = (req, res) => {
   res.send('updatePool');
 };
 
+controller.addUserToPool = (req, res) => {
+  res.send(`addUserToPool where pool is: ${req.params.id} and user is: ${req.params.userId}`);
+};
+
 export default controller;

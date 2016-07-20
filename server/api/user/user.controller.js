@@ -20,10 +20,6 @@ controller.addUserExpense = (req, res) => {
   res.send('addUserExpense');
 };
 
-controller.addUserToPool = (req, res) => {
-  res.send('addUserToPool');
-};
-
 controller.addUser = (req, res) => {
   res.send('addUser');
 };

@@ -17,10 +17,7 @@ router.get('/:id/users-expenses', controller.getUserExpenses);
 router.get('/:id', controller.getUser);
 
 // POST => expense for user
-router.post('/:id/users-expenses', controller.addUserExpense);
-
-// POST => Add user to pool
-router.post('/:id/expense-pool', controller.addUserToPool);
+router.post('/:id/users-expenses/:expenseId', controller.addUserExpense);
 
 // POST => Add user
 router.post('/:id', controller.addUser);
