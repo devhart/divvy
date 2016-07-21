@@ -10,20 +10,26 @@ angular.module('app', [
 	'ngCookies'
 ])
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
 
-	$urlRouterProvider.otherwise('/pools');
+	$urlRouterProvider.otherwise(function($injector) {
+		$injector.get('$state').go('poolsState');
+	});
+	// $locationProvider.html5Mode(true);
 
+	$httpProvider.interceptors.push('authInterceptor');
 	$stateProvider
 	.state('loginState', {
 		url: '/login',
+		auth: false,
 		templateUrl: './app/components/login/login.html'
 		//Placeholder for LOGIN CONTROLLER (if needed)
 	})
 	.state('poolsState', {
 		url: '/pools',
 		templateUrl: './app/components/pools/pools.html',
-		controller: 'poolsCtrl'
+		controller: 'poolsCtrl',
+		auth: true
 	})
 	.state('newPoolState', {
 		url: '/newPool',
@@ -63,7 +69,6 @@ angular.module('app', [
 			expenseid: null
 		},
 	});
-	$httpProvider.interceptors.push('authInterceptor');
 })
 .factory('db', function($http){
 	var obj = {};
@@ -156,7 +161,10 @@ angular.module('app', [
 })
 .run(function($rootScope, $state, Auth) {
 	$rootScope.$on('$stateChangeStart', function(event, next,  params) {
-		if (!Auth.isLoggedIn()) { // only checking via auth servcie
+		console.log('next', next);
+		console.log('next.auth', next.auth);
+		console.log('!Auth.isLoggedIn()', !Auth.isLoggedIn())
+		if (next.auth && !Auth.isLoggedIn()) { // only checking via auth servcie
 			$state.go('loginState');
 		}
 	});
