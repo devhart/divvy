@@ -1,7 +1,7 @@
 <div ng-init="filterToPool()">
 <img src="{{pool.image}}">
 <h2> {{pool.name}} </h2>
-
+<text ng-repeat="user in users track by $index"> {{user.name}}</text>
 
 <h3> Total amount owed: {{pool.total}} </h3>
 
@@ -14,8 +14,7 @@
 	<tr>
 	<th width= 5% > </th>
 	<th width= 40%> Expense </th>
-	<th width= 5% > Amount Owed </th>
-	<th width= 5% > Participated? </th>
+	<th width= 5% > Amount </th>
 	</tr>
 
 	<tr ng-repeat= "expense in expenses track by $index">
@@ -29,13 +28,6 @@
 
 	<td>
 		{{expense.amount}} 
-	</td>
-
-	<td>
-		<div style= "text-align:center">
-		<button ng-click= "participateClick(expense.participated, $index)" style= "background-color:grey"> 
-		{{expense.participated}} </button>
-		</div>
 	</td>
 	</tr>
 
