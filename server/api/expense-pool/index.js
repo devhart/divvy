@@ -10,14 +10,17 @@ router.post('/', controller.addPool);
 // GET => get a specific pool
 router.get('/:id', controller.getPool);
 
+/**
+ * POST => Add user to pool
+ * Expect body to contain ID of user to add
+ */
+router.post('/:id/users', controller.addUserToPool);
+
 // ------------ Routes above have updated controllers ----------------
 
 // GET => show all pools
 // Added for testing only
 router.get('/test', controller.getPools);
-
-// POST => Add user to pool
-router.post('/:id/users/:userId', controller.addUserToPool);
 
 // Express router captures implied filepath
 // '/:id' below is '/api/expense-pools/:id'
