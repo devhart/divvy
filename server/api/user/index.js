@@ -1,13 +1,15 @@
 import express from 'express';
 import controller from './user.controller';
 const router = express.Router();
-import { isAuthenticated } from '../../auth/auth.service';
 
 /** Responds with current logged in user. */
 router.get('/me', controller.me);
 
 // GET => all pools that a user is part of
-router.get('/:id/expense-pools', isAuthenticated(), controller.getUserPools);
+router.get('/:id/expense-pools', controller.getUserPools);
+
+// GET => all users
+router.get('/', controller.getAllUsers);
 
 // ------------ Routes above have updated controllers ----------------
 
