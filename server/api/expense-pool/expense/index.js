@@ -3,18 +3,21 @@ import controller from './expense.controller';
 
 const router = express.Router({ mergeParams: true });
 
-// POST => add an expense to a specific pool
+// POST => Add an expense to a specific pool
 router.post('/', controller.addExpense);
 
 // GET => All expenses associated with the provided expense-pool
 router.get('/', controller.getExpenses);
 
-// ------------ Routes above have updated controllers ----------------
+/**
+ * PUT / PATCH => Edit single record
+ * Request body should be key-value pairs of attributes to update
+ * Returns a 204 status on success
+ */
+router.put('/:expenseId', controller.editExpense);
+router.patch('/:expenseId', controller.editExpense);
 
-
-// POST => update a specific expense
-router.post('/:expenseId', controller.editExpense);
-// GET => specific expense
+// GET => Specific expense
 router.get('/:expenseId', controller.getOneExpense);
 
 export default router;
