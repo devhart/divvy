@@ -1,13 +1,18 @@
 const controller = {};
+
 const handleError = (res, error) => {
   console.log(error);
   res.sendStatus(500);
 };
 
+controller.me = (req, res) => {
+  res.json(req.user);
+};
+
 controller.getUserPools = (req, res) => {
   req.user.getExpensePools()
-  .then(expensePools => res.json(expensePools))
-  .catch(error => handleError(res, error));
+    .then(expensePools => res.json(expensePools))
+    .catch(error => handleError(res, error));
 };
 
 // ------------ Routes above have updated controllers ----------------
