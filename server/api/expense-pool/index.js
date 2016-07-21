@@ -18,17 +18,8 @@ router.get('/:id', isPoolMember(), controller.getPool);
  */
 router.post('/:id/users', isPoolMember(), controller.addUserToPool);
 
-// ------------ Routes above have updated controllers ----------------
-
-// GET => show all pools
-// Added for testing only
-router.get('/test', isPoolMember(), controller.getPools);
-
-// Express router captures implied filepath
-// '/:id' below is '/api/expense-pools/:id'
-
-// POST => update a specific pool
-router.post('/:id', isPoolMember(), controller.updatePool);
+router.put('/:id', isPoolMember(), controller.updatePool);
+router.patch('/:id', isPoolMember(), controller.updatePool);
 
 router.use('/:id/expenses', isPoolMember(), expenseRouter);
 

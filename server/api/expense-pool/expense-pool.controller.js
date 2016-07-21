@@ -21,65 +21,30 @@ controller.addPool = (req, res) => {
   .catch(error => handleError(res, error));
 };
 
-
 controller.addUserToPool = (req, res) => {
-  ExpensePool.findById(req.params.id)
-    .then(expensePool => {
+  req.expensePool.hasUser(req.body.userId)
+    .then(isMember => {
+      if (isMember) {
+        return res.status(403).send('User already exists in pool');
+      }
       return User.findById(req.body.userId)
-        .then(user => expensePool.hasUser(user)
-          .then(result => {
-            if (result) {
-              return res.status(403).send('User already exists in pool');
-            }
-            return expensePool.addUser(user)
-              .then(res.sendStatus(201));
-          }));
+        .then(userToAdd => req.expensePool.addUser(userToAdd))
+        .then(() => res.sendStatus(201));
     })
     .catch(error => handleError(res, error));
 };
 
-// project.hasUser(user).then(function(result) {
-//       // result would be false
-//       return project.addUser(user).then(function() {
-//         return project.hasUser(user).then(function(result) {
-//           // result would be true
-//         })
-//       })
-
-// ------------ Controllers above have updated routes ----------------
-
 controller.getPool = (req, res) => {
-  ExpensePool.findById(req.params.id)
-  .then(expensePool => res.send(expensePool))
-  .catch(error => handleError(res, error));
-};
-
-// Used in testing
-controller.getPools = (req, res) => {
-  ExpensePool.findAll({
-    raw: true,
-  })
-  .then(expensePool => res.send(expensePool))
-  .catch(error => handleError(res, error));
+  res.json(req.expensePool);
 };
 
 controller.updatePool = (req, res) => {
-  // TODO: Update update object's values
-  //       To be taken from req.body object
-  ExpensePool.update(
-    {
-      name: 'new updated pool name',
-      description: 'new description',
-    },
-    {
-      where: { _id: req.params.id },
-    })
-  .then(expensePool => {
-    res.send(expensePool.get({
-      plain: true,
-    }));
-  })
-  .catch(error => handleError(res, error));
+  if (req.body._id) {
+    delete req.body._id;
+  }
+  req.expensePool.updateAttributes(req.body)
+    .then(updated => res.json(updated))
+    .catch(error => handleError(res, error));
 };
 
 export default controller;
