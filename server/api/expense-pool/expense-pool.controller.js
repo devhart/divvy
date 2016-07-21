@@ -2,9 +2,12 @@ import { ExpensePool, User } from '../../db';
 
 const controller = {};
 
+const handleError = (res, error) => {
+  console.log(error);
+  res.sendStatus(500);
+};
+
 controller.addPool = (req, res) => {
-  // TODO: Update create object's values
-  //       To be taken from req.body object
   const obj = {};
   ExpensePool.create(req.body, ['name', 'description', 'imgUrl'])
   .then(expensePool => {
@@ -12,25 +15,18 @@ controller.addPool = (req, res) => {
     return expensePool.addUser(req.user);
   })
   .then(expensePoolUsers => {
-    console.log('expensePoolUsers', JSON.stringify(expensePoolUsers));
     obj.expensePoolUsers = expensePoolUsers;
     res.json(obj);
   })
-  .catch(error => {
-    console.log(error);
-    res.sendStatus(500);
-  });
+  .catch(error => handleError(res, error));
 };
+
+// ------------ Controllers above have updated routes ----------------
 
 controller.getPool = (req, res) => {
   ExpensePool.findById(req.params.id)
-  .then(expensePool => {
-    res.send(expensePool);
-  })
-  .catch(error => {
-    console.log(error);
-    res.sendStatus(500);
-  });
+  .then(expensePool => res.send(expensePool))
+  .catch(error => handleError(res, error));
 };
 
 // Used in testing
@@ -38,13 +34,8 @@ controller.getPools = (req, res) => {
   ExpensePool.findAll({
     raw: true,
   })
-  .then(expensePool => {
-    res.send(expensePool);
-  })
-  .catch(error => {
-    console.log(error);
-    res.sendStatus(500);
-  });
+  .then(expensePool => res.send(expensePool))
+  .catch(error => handleError(res, error));
 };
 
 controller.updatePool = (req, res) => {
@@ -63,10 +54,7 @@ controller.updatePool = (req, res) => {
       plain: true,
     }));
   })
-  .catch(error => {
-    console.log(error);
-    res.sendStatus(500);
-  });
+  .catch(error => handleError(res, error));
 };
 
 controller.addUserToPool = (req, res) => {
