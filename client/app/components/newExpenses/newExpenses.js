@@ -4,14 +4,13 @@ angular.module('newExpenseApp', [])
   $scope.currentPool = '';
   
   $scope.toPool = function () {
-    $state.go('poolState');
+    $state.go('poolState', {id:$stateParams.id});
   };
 
   $scope.addExpense = function (expense) {
     console.log('adding a new expense', expense);
     expense.id = Math.floor(Math.random()*10000);
     expense.createdBy = 1;
-    expense.participated = "yes";
 
     for (var i =0; i < db.pools.length; i++) {
       if (db.pools[i].id === +$stateParams.id) {
