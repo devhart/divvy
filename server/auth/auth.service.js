@@ -35,6 +35,10 @@ const populateReqUser = (req, res, next) => {
     .catch(err => next(err));
 };
 
+/**
+ * Returns a single middleware function used to
+ * validate tokens and attach user to request
+ */
 export const isAuthenticated = () => compose()
   .use(compose().use(accessTokenHeader).use(validateJwt))
   .use(populateReqUser);
