@@ -1,33 +1,19 @@
+/**
+ * GET   /api/users                    -> list of all users
+ * GET   /api/users/:id                -> get info for req.params.id user
+ * GET   /api/users/me                 -> get info for req.user
+ * GET   /api/users/me/expense-pools/  -> list of expense pools for req.user
+ */
+
 import express from 'express';
 import controller from './user.controller';
 const router = express.Router();
 
-/** Responds with current logged in user. */
+router.get('/', controller.all);
+router.get('/:id', controller.get);
+
 router.get('/me', controller.me);
-
-// GET => all pools that a user is part of
-router.get('/:id/expense-pools', controller.getUserPools);
-
-// GET => all users
-router.get('/', controller.getAllUsers);
-
-// ------------ Routes above have updated controllers ----------------
-
-// GET => all user expenses for selected pool
-router.get('/:id/expense-pools/:expPoolId/expenses',
-            controller.getUserPoolExpenses);
-
-// GET => all user expenses
-router.get('/:id/users-expenses', controller.getUserExpenses);
-
-// GET => info on one user
-router.get('/:id', controller.getUser);
-
-// POST => expense for user
-router.post('/:id/users-expenses/:expenseId', controller.addUserExpense);
-
-// POST => Add user
-router.post('/:id', controller.addUser);
+router.get('/me/expense-pools', controller.myPools);
 
 export default router;
 
