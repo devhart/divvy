@@ -64,34 +64,22 @@ describe('User Model', () => {
     }, {
       name: 'Pool2',
     }];
-    const expenseRecords = [{
-      name: 'Expense1',
-    }, {
-      name: 'Expense2',
-    }];
     let user;
     let pool1;
     let pool2;
-    let expense1;
-    let expense2;
 
     beforeEach(() => {
       return User.create(userRecord)
         .then(createdUser => user = createdUser)
         .then(() => ExpensePool.bulkCreate(expensePoolRecords))
         .then(() => ExpensePool.all())
-        .then(pools => [pool1, pool2] = pools)
-        .then(() => Expense.bulkCreate(expenseRecords))
-        .then(() => Expense.all())
-        .then(expenses => [expense1, expense2] = expenses);
+        .then(pools => [pool1, pool2] = pools);
     });
 
     it('should bulk create user, pools and expenses', () => {
       user.email.should.equal(email);
       pool1.name.should.equal('Pool1');
       pool2.name.should.equal('Pool2');
-      expense1.name.should.equal('Expense1');
-      expense2.name.should.equal('Expense2');
     });
 
     describe('ExpensePool', () => {
@@ -112,29 +100,6 @@ describe('User Model', () => {
             .then(userPools => {
               userPools.should.contain.a.thing.with.property('_id', pool1._id);
               userPools.should.contain.a.thing.with.property('_id', pool2._id);
-            });
-        });
-      });
-    });
-
-    describe('Expense', () => {
-      describe('#addExpense', () => {
-        it('should add expense to user\'s expenses', () => {
-          return user.addExpense(expense1)
-            .then(() => user.getExpenses())
-            .then(userExpenses => {
-              userExpenses.should.contain.a.thing.with.property('_id', expense1._id);
-              userExpenses.should.not.contain.a.thing.with.property('_id', expense2._id);
-            });
-        });
-
-        it('should allow multiple expenses to be associated', () => {
-          return user.addExpense(expense1)
-            .then(() => user.addExpense(expense2))
-            .then(() => user.getExpenses())
-            .then(userExpenses => {
-              userExpenses.should.contain.a.thing.with.property('_id', expense1._id);
-              userExpenses.should.contain.a.thing.with.property('_id', expense2._id);
             });
         });
       });

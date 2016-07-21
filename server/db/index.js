@@ -9,9 +9,7 @@ export const Expense = db.import('../api/expense-pool/expense/expense.model');
 
 User.belongsToMany(ExpensePool, { through: 'ExpensePoolUser' });
 ExpensePool.belongsToMany(User, { through: 'ExpensePoolUser' });
-
-Expense.belongsTo(ExpensePool);
-Expense.belongsToMany(User, { through: 'ExpenseUser' });
-User.belongsToMany(Expense, { through: 'ExpenseUser' });
+ExpensePool.hasMany(Expense);
+Expense.belongsTo(User);
 
 export default db;
