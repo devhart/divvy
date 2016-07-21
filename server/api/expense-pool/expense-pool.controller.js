@@ -1,4 +1,4 @@
-import { ExpensePool, User } from '../../database/database';
+import { ExpensePool, User } from '../../db';
 
 const controller = {};
 

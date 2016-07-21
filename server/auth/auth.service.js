@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 
 import config from '../config/environment';
-import { User } from '../database/database';
+import { User } from '../db';
 
 const EXPIRY = 60 * 60 * 5;
 const SECRET = config.secrets.session;

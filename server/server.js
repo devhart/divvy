@@ -4,7 +4,7 @@ import 'babel-polyfill';
 import configExpress from './config/express';
 import configRoutes from './routes';
 import express from 'express';
-import db from './database/database';
+import db from './db';
 
 const app = express();
 

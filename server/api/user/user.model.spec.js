@@ -1,4 +1,4 @@
-import db, { User, ExpensePool, Expense } from '../../database/database';
+import db, { User, ExpensePool, Expense } from '../../db';
 
 const cleanModels = () => User.destroy({ where: {} })
   .then(() => ExpensePool.destroy({ where: {} }))

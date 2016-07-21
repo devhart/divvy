@@ -1,4 +1,5 @@
-import { Expense, ExpensePool } from '../../../database/database';
+import { Expense, ExpensePool } from '../../../db';
+
 const controller = {};
 
 controller.addExpense = (req, res) => {
