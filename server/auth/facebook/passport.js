@@ -6,7 +6,7 @@ export default (User, config) => {
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL,
-    profileFields: ['displayName', 'emails'],
+    profileFields: ['id', 'displayName', 'link', 'photos', 'email'],
   };
 
   const handler = (accessToken, refreshToken, profile, done) => {
