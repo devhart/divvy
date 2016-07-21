@@ -1,11 +1,7 @@
 import { Expense, ExpensePool } from '../../../db';
+import { handleError } from '../../../utils';
 
 const controller = {};
-
-const handleError = (res, error) => {
-  console.log(error);
-  res.sendStatus(500);
-};
 
 controller.addExpense = (req, res) => {
   ExpensePool.findById(req.params.id)
@@ -15,14 +11,14 @@ controller.addExpense = (req, res) => {
         .then(expense => expense.setExpensePool(expensePool))
         .then(expense => res.send(expense.get({ plain: true })));
     })
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 controller.editExpense = (req, res) => {
   Expense.findById(req.params.expenseId)
     .then(expense => expense.updateAttributes(req.body))
     .then(() => res.sendStatus(204))
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 controller.getExpenses = (req, res) => {
@@ -30,14 +26,14 @@ controller.getExpenses = (req, res) => {
     raw: true,
     where: { ExpensePoolId: req.params.id },
   })
-  .then(expenses => res.send(expenses))
-  .catch(error => handleError(res, error));
+    .then(expenses => res.send(expenses))
+    .catch(handleError(res));
 };
 
 controller.getOneExpense = (req, res) => {
   Expense.findById(req.params.expenseId)
     .then(expenses => res.send(expenses))
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 export default controller;

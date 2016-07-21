@@ -1,20 +1,6 @@
 import compose from 'composable-middleware';
 import { ExpensePool } from '../../db';
-
-const handleError = (res, error) => {
-  console.log(error);
-  res.status(500).send(error);
-};
-
-const handleNotFound = res => {
-  return entity => {
-    if (entity) {
-      return entity;
-    }
-    res.sendStatus(404);
-    return null;
-  };
-};
+import { handleError, handleNotFound } from '../../utils';
 
 /**
  * Finds ExpensePool from params and adds req.expensePool
@@ -31,7 +17,7 @@ const decorateWithPool = (req, res, next) => {
         next();
       }
     })
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 /**
@@ -48,7 +34,7 @@ const isMember = (req, res, next) => {
       }
       return res.status(403).send('Not expense pool member.');
     })
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 /**
