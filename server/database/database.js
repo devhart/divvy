@@ -10,9 +10,6 @@ export const Expense = db.import('../api/expense-pool/expense/expense.model');
 User.belongsToMany(ExpensePool, { through: 'ExpensePoolUser' });
 ExpensePool.belongsToMany(User, { through: 'ExpensePoolUser' });
 
-// Note: Expense.belongsTo(ExpensePool) fails on query of expenses
-// Expense.belongsTo(ExpensePool, { foreignKey: 'ExpensePoolId' });
-// Expense.hasOne(ExpensePool, { foreignKey: 'ExpensePoolId' });
 Expense.belongsTo(ExpensePool);
 Expense.belongsToMany(User, { through: 'ExpenseUser' });
 User.belongsToMany(Expense, { through: 'ExpenseUser' });

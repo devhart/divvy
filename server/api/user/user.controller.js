@@ -10,8 +10,7 @@ controller.getUserPools = (req, res) => {
   .catch(error => handleError(res, error));
 };
 
-
-
+// ------------ Routes above have updated controllers ----------------
 
 controller.getUserPoolExpenses = (req, res) => {
   res.send(`getUserPoolExpenses ${req.params.id}, ${req.params.expPoolId}`);
