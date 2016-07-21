@@ -9,11 +9,13 @@ router.post('/', controller.addExpense);
 // GET => All expenses associated with the provided expense-pool
 router.get('/', controller.getExpenses);
 
-// POST => update a specific expense
+/**
+ * PUT / PATCH => Edit single record
+ * Request body should be key-value pairs of attributes to update
+ * Returns a 204 status on success
+ */
 router.put('/:expenseId', controller.editExpense);
 router.patch('/:expenseId', controller.editExpense);
-
-// ------------ Routes above have updated controllers ----------------
 
 // GET => specific expense
 router.get('/:expenseId', controller.getOneExpense);
