@@ -1,5 +1,16 @@
-angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'updateExpenseApp', 'poolsApp', 'newPoolApp', 'updatePoolApp'])
-.config(function($stateProvider, $urlRouterProvider) {
+angular.module('app', [
+	'poolApp', 
+	'ui.router', 
+	'newExpenseApp', 
+	'updateExpenseApp', 
+	'poolsApp', 
+	'newPoolApp', 
+	'updatePoolApp',
+	'ngResource',
+	'ngCookies'
+])
+
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
 	$urlRouterProvider.otherwise('/pools');
 
@@ -50,8 +61,9 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'updateExpenseAp
 		params: {
 			poolid: null,
 			expenseid: null
-		}
-	})
+		},
+	});
+	$httpProvider.interceptors.push('authInterceptor');
 })
 .factory('db', function($http){
 	var obj = {};
@@ -79,4 +91,73 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'updateExpenseAp
 	};	
 
 	return obj;
+})
+.factory('authInterceptor', function ($rootScope, $q, $cookies, $injector) {
+	return {
+  // Add authorization token to headers
+	  request: function(config) {
+	    config.headers = config.headers || {};
+	    if ($cookies.get('token')) {
+	      config.headers.Authorization = 'Bearer ' + $cookies.get('token');
+	    }
+	    return config;
+	  },
+
+	  // Intercept 401s and redirect you to login
+	  responseError: function(response) {
+	    if (response.status === 401) {
+	      $cookies.remove('token');
+	      // Use injector to get around circular dependency.
+	      $injector.get('$state').go('loginState');
+	    }
+	    return $q.reject(response);
+	  }
+	}
+})
+.factory('User', function($resource) {
+	return $resource('/api/users/:userId/:controller', {
+    userId: '@_id'
+  }, {
+    me: {
+      method: 'GET',
+      params: {
+        controller: 'me'
+      }
+    }
+  });
+})
+.factory('Auth', function(User, $cookies, $window) {
+	var currentUser = {};
+	if($cookies.get('token')) {
+		currentUser = User.me();
+	}
+	return {
+    logout: function() {
+      $cookies.remove('token');
+      currentUser = {};
+    },
+    login: function() {
+    	$window.location.href = '/auth/facebook';
+    },
+    getCurrentUser: function(){
+    	return currentUser
+    },
+    isLoggedIn: function() {
+    	return currentUser.hasOwnProperty('name')
+    },
+    isLoggedInAsync: function() {
+      if ($cookies.get('token')) {
+        return User.me();
+      } else {
+        return currentUser;
+      }
+    }
+  };
+})
+.run(function($rootScope, $state, Auth) {
+	$rootScope.$on('$stateChangeStart', function(event, next,  params) {
+		if (!Auth.isLoggedIn()) { // only checking via auth servcie
+			$state.go('loginState');
+		}
+	});
 })
