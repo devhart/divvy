@@ -1,3 +1,5 @@
+import { User } from '../../db';
+
 const controller = {};
 
 const handleError = (res, error) => {
@@ -14,6 +16,14 @@ controller.getUserPools = (req, res) => {
     .then(expensePools => res.json(expensePools))
     .catch(error => handleError(res, error));
 };
+
+// Returns current user, and users in pool
+controller.getAllUsers = (req, res) => {
+  User.findAll()
+    .then(users => res.json(users))
+    .catch(error => handleError(res, error));
+};
+
 
 // ------------ Routes above have updated controllers ----------------
 

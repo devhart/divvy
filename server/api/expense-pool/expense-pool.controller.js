@@ -21,6 +21,31 @@ controller.addPool = (req, res) => {
   .catch(error => handleError(res, error));
 };
 
+
+controller.addUserToPool = (req, res) => {
+  ExpensePool.findById(req.params.id)
+    .then(expensePool => {
+      return User.findById(req.body.userId)
+        .then(user => expensePool.hasUser(user)
+          .then(result => {
+            if (result) {
+              return res.status(403).send('User already exists in pool');
+            }
+            return expensePool.addUser(user)
+              .then(res.sendStatus(201));
+          }));
+    })
+    .catch(error => handleError(res, error));
+};
+
+// project.hasUser(user).then(function(result) {
+//       // result would be false
+//       return project.addUser(user).then(function() {
+//         return project.hasUser(user).then(function(result) {
+//           // result would be true
+//         })
+//       })
+
 // ------------ Controllers above have updated routes ----------------
 
 controller.getPool = (req, res) => {
@@ -55,21 +80,6 @@ controller.updatePool = (req, res) => {
     }));
   })
   .catch(error => handleError(res, error));
-};
-
-controller.addUserToPool = (req, res) => {
-  // TODO: Set correct User-Pool ownership in models
-  // TODO: Correct the route to this controller - fails currently
-  ExpensePool.findById(req.body.id)
-    .then(expensePool => {
-      expensePool.addUser(
-        User.findById(req.body.userId)
-        .catch(error => {
-          console.log(error);
-          res.sendStatus(500);
-        })
-      );
-    });
 };
 
 export default controller;
