@@ -25,4 +25,48 @@ describe('Expense Model', () => {
       });
     });
   });
+
+  describe('Relationships', () => {
+    const userRecord = { name: 'User', email: 'user@example.com' };
+    const expenseRecords = [
+      { name: 'Expense1' },
+      { name: 'Expense2' },
+    ];
+    let user;
+    let expense1;
+    let expense2;
+
+    beforeEach(() => {
+      return User.create(userRecord)
+        .then(createdUser => user = createdUser)
+        .then(() => Expense.bulkCreate(expenseRecords))
+        .then(() => Expense.all())
+        .then(expenses => [expense1, expense2] = expenses);
+    });
+
+    it('should bulk create user, pools and expenses', () => {
+      user.email.should.equal('user@example.com');
+      expense1.name.should.equal('Expense1');
+      expense2.name.should.equal('Expense2');
+    });
+
+    describe('User', () => {
+      describe('#setUser', () => {
+        it('should set a user to expense user', () => {
+          return expense1.setUser(user)
+            .then(() => expense1.getUser())
+            .then(expenseUser => expenseUser._id.should.equal(user._id));
+        });
+
+        it('should allow the same user to be set as User for many expenses', () => {
+          return expense1.setUser(user)
+            .then(() => expense1.getUser())
+            .then(expenseUser => expenseUser._id.should.equal(user._id))
+            .then(() => expense2.setUser(user))
+            .then(() => expense2.getUser())
+            .then(expenseUser => expenseUser._id.should.equal(user._id));
+        });
+      });
+    });
+  });
 });
