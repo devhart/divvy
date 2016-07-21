@@ -1,19 +1,20 @@
-import { ExpensePool } from '../../database/database';
+import { ExpensePool, User } from '../../database/database';
 
 const controller = {};
 
 controller.addPool = (req, res) => {
   // TODO: Update create object's values
   //       To be taken from req.body object
-  ExpensePool.create({
-    name: 'test1',
-    description: 'trying to input a value',
-    closed: false,
-  }, ['name', 'description', 'closed'])
+  const obj = {};
+  ExpensePool.create(req.body, ['name', 'description', 'imgUrl'])
   .then(expensePool => {
-    res.send(expensePool.get({
-      plain: true,
-    }));
+    obj.expensePool = expensePool;
+    return expensePool.addUser(req.user);
+  })
+  .then(expensePoolUsers => {
+    console.log('expensePoolUsers', JSON.stringify(expensePoolUsers));
+    obj.expensePoolUsers = expensePoolUsers;
+    res.json(obj);
   })
   .catch(error => {
     console.log(error);
@@ -22,10 +23,7 @@ controller.addPool = (req, res) => {
 };
 
 controller.getPool = (req, res) => {
-  ExpensePool.findAll({
-    where: { _id: req.params.id },
-    raw: true,
-  })
+  ExpensePool.findById(req.params.id)
   .then(expensePool => {
     res.send(expensePool);
   })
@@ -35,6 +33,7 @@ controller.getPool = (req, res) => {
   });
 };
 
+// Used in testing
 controller.getPools = (req, res) => {
   ExpensePool.findAll({
     raw: true,
@@ -57,7 +56,7 @@ controller.updatePool = (req, res) => {
       description: 'new description',
     },
     {
-      where: { _id: req.body.id },
+      where: { _id: req.params.id },
     })
   .then(expensePool => {
     res.send(expensePool.get({
@@ -73,7 +72,16 @@ controller.updatePool = (req, res) => {
 controller.addUserToPool = (req, res) => {
   // TODO: Set correct User-Pool ownership in models
   // TODO: Correct the route to this controller - fails currently
-  res.send(`addUserToPool where pool is: ${req.params.id} and user is: ${req.params.userId}`);
+  ExpensePool.findById(req.body.id)
+    .then(expensePool => {
+      expensePool.addUser(
+        User.findById(req.body.userId)
+        .catch(error => {
+          console.log(error);
+          res.sendStatus(500);
+        })
+      );
+    });
 };
 
 export default controller;

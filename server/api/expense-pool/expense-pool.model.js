@@ -7,6 +7,7 @@ export default function ExpensePool(sequelize, DataTypes) {
       autoIncrement: true,
     },
     name: DataTypes.STRING,
+    imgUrl: DataTypes.STRING,
     description: DataTypes.STRING,
     closed: DataTypes.BOOLEAN,
   });
