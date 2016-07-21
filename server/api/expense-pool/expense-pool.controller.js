@@ -1,11 +1,7 @@
 import { ExpensePool, User } from '../../db';
+import { handleError } from '../../utils';
 
 const controller = {};
-
-const handleError = (res, error) => {
-  console.log(error);
-  res.sendStatus(500);
-};
 
 controller.create = (req, res) => {
   const obj = {};
@@ -18,7 +14,7 @@ controller.create = (req, res) => {
       obj.expensePoolUsers = expensePoolUsers;
       res.json(obj);
     })
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 controller.get = (req, res) => {
@@ -31,7 +27,7 @@ controller.update = (req, res) => {
   }
   req.expensePool.updateAttributes(req.body)
     .then(updated => res.json(updated))
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 controller.addUser = (req, res) => {
@@ -44,13 +40,13 @@ controller.addUser = (req, res) => {
         .then(userToAdd => req.expensePool.addUser(userToAdd))
         .then(() => res.sendStatus(201));
     })
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 controller.listUsers = (req, res) => {
   req.expensePool.getUsers()
     .then(users => res.json(users))
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 export default controller;

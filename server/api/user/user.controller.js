@@ -1,11 +1,7 @@
 import { User } from '../../db';
+import { handleError } from '../../utils';
 
 const controller = {};
-
-const handleError = (res, error) => {
-  console.log(error);
-  res.sendStatus(500);
-};
 
 controller.me = (req, res) => {
   res.json(req.user);
@@ -14,14 +10,14 @@ controller.me = (req, res) => {
 controller.getUserPools = (req, res) => {
   req.user.getExpensePools()
     .then(expensePools => res.json(expensePools))
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 // Returns current user, and users in pool
 controller.getAllUsers = (req, res) => {
   User.findAll()
     .then(users => res.json(users))
-    .catch(error => handleError(res, error));
+    .catch(handleError(res));
 };
 
 
