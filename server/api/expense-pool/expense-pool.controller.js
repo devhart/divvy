@@ -7,21 +7,34 @@ const handleError = (res, error) => {
   res.sendStatus(500);
 };
 
-controller.addPool = (req, res) => {
+controller.create = (req, res) => {
   const obj = {};
-  ExpensePool.create(req.body, ['name', 'description', 'imgUrl'])
-  .then(expensePool => {
-    obj.expensePool = expensePool;
-    return expensePool.addUser(req.user);
-  })
-  .then(expensePoolUsers => {
-    obj.expensePoolUsers = expensePoolUsers;
-    res.json(obj);
-  })
-  .catch(error => handleError(res, error));
+  ExpensePool.create(req.body)
+    .then(expensePool => {
+      obj.expensePool = expensePool;
+      return expensePool.addUser(req.user);
+    })
+    .then(expensePoolUsers => {
+      obj.expensePoolUsers = expensePoolUsers;
+      res.json(obj);
+    })
+    .catch(error => handleError(res, error));
 };
 
-controller.addUserToPool = (req, res) => {
+controller.get = (req, res) => {
+  res.json(req.expensePool);
+};
+
+controller.update = (req, res) => {
+  if (req.body._id) {
+    delete req.body._id;
+  }
+  req.expensePool.updateAttributes(req.body)
+    .then(updated => res.json(updated))
+    .catch(error => handleError(res, error));
+};
+
+controller.addUser = (req, res) => {
   req.expensePool.hasUser(req.body.userId)
     .then(isMember => {
       if (isMember) {
@@ -34,16 +47,9 @@ controller.addUserToPool = (req, res) => {
     .catch(error => handleError(res, error));
 };
 
-controller.getPool = (req, res) => {
-  res.json(req.expensePool);
-};
-
-controller.updatePool = (req, res) => {
-  if (req.body._id) {
-    delete req.body._id;
-  }
-  req.expensePool.updateAttributes(req.body)
-    .then(updated => res.json(updated))
+controller.listUsers = (req, res) => {
+  req.expensePool.getUsers()
+    .then(users => res.json(users))
     .catch(error => handleError(res, error));
 };
 
