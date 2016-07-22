@@ -3,36 +3,31 @@ import { handleError } from '../../../utils';
 
 const controller = {};
 
-controller.addExpense = (req, res) => {
-  ExpensePool.findById(req.params.id)
-    .then(expensePool => {
-      // Closure provides setExpense pool with access to expensePool
-      return Expense.create(req.body)
-        .then(expense => expense.setExpensePool(expensePool))
-        .then(expense => res.send(expense.get({ plain: true })));
-    })
+controller.create = (req, res) => {
+  Expense.create(req.body)
+    .then(expense => expense.setUser(req.user)
+      .then(() => req.expensePool.addExpense(expense))
+      .then(() => res.json(expense)))
     .catch(handleError(res));
 };
 
-controller.editExpense = (req, res) => {
+controller.all = (req, res) => {
+  res.json(req.expensePool.getExpenses());
+};
+
+controller.get = (req, res) => {
+  Expense.findById(req.params.expenseId)
+    .then(expense => res.json(expense))
+    .catch(handleError(res));
+};
+
+controller.update = (req, res) => {
+  if (req.body._id) {
+    delete req.body._id;
+  }
   Expense.findById(req.params.expenseId)
     .then(expense => expense.updateAttributes(req.body))
-    .then(() => res.sendStatus(204))
-    .catch(handleError(res));
-};
-
-controller.getExpenses = (req, res) => {
-  Expense.findAll({
-    raw: true,
-    where: { ExpensePoolId: req.params.id },
-  })
-    .then(expenses => res.send(expenses))
-    .catch(handleError(res));
-};
-
-controller.getOneExpense = (req, res) => {
-  Expense.findById(req.params.expenseId)
-    .then(expenses => res.send(expenses))
+    .then(updated => res.json(updated))
     .catch(handleError(res));
 };
 
