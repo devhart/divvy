@@ -55,16 +55,19 @@ describe('Expense Model', () => {
         it('should set a user to expense user', () => {
           return expense1.setUser(user)
             .then(() => expense1.getUser())
-            .then(expenseUser => expenseUser._id.should.equal(user._id));
+            .then(expenseUser => expenseUser._id.should.equal(user._id))
+            .then(() => expense1.UserId.should.equal(user._id));
         });
 
         it('should allow the same user to be set as User for many expenses', () => {
           return expense1.setUser(user)
             .then(() => expense1.getUser())
             .then(expenseUser => expenseUser._id.should.equal(user._id))
+            .then(() => expense1.UserId.should.equal(user._id))
             .then(() => expense2.setUser(user))
             .then(() => expense2.getUser())
-            .then(expenseUser => expenseUser._id.should.equal(user._id));
+            .then(expenseUser => expenseUser._id.should.equal(user._id))
+            .then(() => expense2.UserId.should.equal(user._id));
         });
       });
     });
