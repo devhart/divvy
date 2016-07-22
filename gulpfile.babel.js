@@ -7,6 +7,9 @@ import runSequence from 'run-sequence';
 
 const plugins = gulpLoadPlugins();
 const paths = {
+  client: {
+    scripts: ['client/**/*.js', '!**/bower_components/**/*'],
+  },
   server: {
     scripts: ['server/**/!(*.spec).js', '!**/.env.*', '!server/index.js'],
     tests: {
@@ -58,6 +61,10 @@ const lintServerTests = lazypipe()
   .pipe(plugins.eslint, 'server/.eslintrc-spec')
   .pipe(plugins.eslint.format);
 
+const lintClientScripts = lazypipe()
+  .pipe(plugins.eslint, 'client/.eslintrc')
+  .pipe(plugins.eslint.format);
+
 const mocha = lazypipe()
   .pipe(plugins.mocha, {
     reporter: 'spec',
@@ -78,6 +85,15 @@ gulp.task('transpile:server', () => {
     .pipe(gulp.dest(`${paths.dist}/server`));
 });
 
+gulp.task('lint', ['lint:client', 'lint:server']);
+
+gulp.task('lint:client', ['lint:client:scripts']);
+
+gulp.task('lint:client:scripts', () => {
+  return gulp.src(paths.client.scripts)
+    .pipe(lintClientScripts());
+});
+
 gulp.task('lint:server', ['lint:server:scripts', 'lint:server:tests']);
 
 gulp.task('lint:server:scripts', () => {
@@ -96,6 +112,12 @@ gulp.task('start:server', () => {
 
 gulp.task('watch', () => {
   plugins.refresh.listen();
+
+  plugins.watch(paths.client.scripts)
+    .pipe(plugins.plumber())
+    .pipe(lintClientScripts())
+    .pipe(plugins.refresh());
+
   plugins.watch(paths.server.scripts)
     .pipe(plugins.plumber())
     .pipe(lintServerScripts())
@@ -126,7 +148,7 @@ gulp.task('mocha:unit', () => {
 
 gulp.task('default', cb => {
   runSequence('env:all',
-    'lint:server',
+    'lint',
     'start:server',
     'watch',
     cb);

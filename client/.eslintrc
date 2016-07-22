@@ -1,0 +1,12 @@
+{
+  "extends": "eslint-config-airbnb-es5",
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "angular": true
+  },
+  "plugins": [
+    "angular"
+  ]
+}
