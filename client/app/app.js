@@ -1,18 +1,40 @@
-angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'updateExpenseApp', 'poolsApp', 'newPoolApp', 'updatePoolApp'])
-.config(function($stateProvider, $urlRouterProvider) {
+angular.module('app', [
+	'poolApp', 
+	'ui.router', 
+	'newExpenseApp', 
+	'updateExpenseApp', 
+	'poolsApp', 
+	'newPoolApp', 
+	'updatePoolApp',
+	'ngResource',
+	'ngCookies',
+	'ngMaterial'
+])
 
-	$urlRouterProvider.otherwise('/pools');
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $mdThemingProvider) {
 
+	$mdThemingProvider.theme('default')
+	    .primaryPalette('blue')
+	    .accentPalette('red');
+
+	$urlRouterProvider.otherwise(function($injector) {
+		$injector.get('$state').go('poolsState');
+	});
+	// $locationProvider.html5Mode(true);
+
+	$httpProvider.interceptors.push('authInterceptor');
 	$stateProvider
 	.state('loginState', {
 		url: '/login',
+		auth: false,
 		templateUrl: './app/components/login/login.html'
 		//Placeholder for LOGIN CONTROLLER (if needed)
 	})
 	.state('poolsState', {
 		url: '/pools',
 		templateUrl: './app/components/pools/pools.html',
-		controller: 'poolsCtrl'
+		controller: 'poolsCtrl',
+		auth: true
 	})
 	.state('newPoolState', {
 		url: '/newPool',
@@ -50,8 +72,8 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'updateExpenseAp
 		params: {
 			poolid: null,
 			expenseid: null
-		}
-	})
+		},
+	});
 })
 .factory('db', function($http){
 	var obj = {};
@@ -79,4 +101,77 @@ angular.module('app', ['poolApp', 'ui.router', 'newExpenseApp', 'updateExpenseAp
 	};	
 
 	return obj;
+})
+.factory('authInterceptor', function ($rootScope, $q, $cookies, $injector) {
+	return {
+  // Add authorization token to headers
+	  request: function(config) {
+	    config.headers = config.headers || {};
+	    if ($cookies.get('token')) {
+	      config.headers.Authorization = 'Bearer ' + $cookies.get('token');
+	    }
+	    return config;
+	  },
+
+	  // Intercept 401s and redirect you to login
+	  responseError: function(response) {
+	    if (response.status === 401) {
+	      $cookies.remove('token');
+	      // Use injector to get around circular dependency.
+	      $injector.get('$state').go('loginState');
+	    }
+	    return $q.reject(response);
+	  }
+	}
+})
+.factory('User', function($resource) {
+	return $resource('/api/users/:userId/:controller', {
+    userId: '@_id'
+  }, {
+    me: {
+      method: 'GET',
+      params: {
+        controller: 'me'
+      }
+    }
+  });
+})
+.factory('Auth', function(User, $cookies, $window) {
+	var currentUser = {};
+	if($cookies.get('token')) {
+		currentUser = User.me();
+	}
+	return {
+    logout: function() {
+      $cookies.remove('token');
+      currentUser = {};
+    },
+    login: function() {
+    	$window.location.href = '/auth/facebook';
+    },
+    getCurrentUser: function(){
+    	return currentUser
+    },
+    isLoggedIn: function() {
+    	return currentUser.hasOwnProperty('name')
+    },
+    isLoggedInAsync: function() {
+      if ($cookies.get('token')) {
+        return User.me();
+      } else {
+        return currentUser;
+      }
+    }
+  };
+})
+.run(function($rootScope, $state, Auth) {
+	$rootScope.$on('$stateChangeStart', function(event, next,  params) {
+		console.log('next', next);
+		console.log('next.auth', next.auth);
+		console.log('!Auth.isLoggedIn()', !Auth.isLoggedIn())
+		if (next.auth && !Auth.isLoggedIn()) { // only checking via auth servcie
+			event.preventDefault();
+			$state.go('loginState');
+		}
+	});
 })
