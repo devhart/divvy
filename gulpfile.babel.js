@@ -9,6 +9,8 @@ const plugins = gulpLoadPlugins();
 const paths = {
   client: {
     scripts: ['client/**/*.js', '!**/bower_components/**/*'],
+    css: ['client/app/**/*.css'],
+    indexHtml: ['client/index.html']
   },
   server: {
     scripts: ['server/**/!(*.spec).js', '!**/.env.*', '!server/index.js'],
@@ -127,6 +129,38 @@ gulp.task('watch', () => {
     .pipe(plugins.plumber())
     .pipe(lintServerTests())
     .pipe(plugins.refresh());
+
+  gulp.watch('bower.json', ['wiredep']);
+});
+
+gulp.task('inject', cb => runSequence(['inject:js', 'inject:css'], cb));
+
+gulp.task('inject:js', () => {
+  return gulp.src(paths.client.indexHtml)
+    .pipe(plugins.inject(gulp.src(_.union(paths.client.scripts, ['!client/app/app.js']), { read: false }),
+      {
+        starttag: '<!-- injector:js -->',
+        endtag: '<!-- endinjector -->',
+        transform: (filepath) => `<script src="${filepath.replace(/\/client\//, '')}"></script>`
+      }))
+    .pipe(gulp.dest('client/'));
+});
+
+gulp.task('inject:css', () => {
+  return gulp.src(paths.client.indexHtml)
+    .pipe(plugins.inject(gulp.src(paths.client.css, { read: false }),
+      {
+        starttag: '<!-- injector:css -->',
+        endtag: '<!-- endinjector -->',
+        transform: (filepath) => `<link rel="stylesheet" href="${filepath.replace(/\/client\//, '')}">`
+      }))
+    .pipe(gulp.dest('client/'));
+});
+
+gulp.task('wiredep', () => {
+  return gulp.src(paths.client.indexHtml)
+    .pipe(plugins.wiredep())
+    .pipe(gulp.dest('client/'));
 });
 
 gulp.task('test', cb => {
@@ -149,6 +183,7 @@ gulp.task('mocha:unit', () => {
 gulp.task('default', cb => {
   runSequence('env:all',
     'lint',
+    ['inject', 'wiredep'],
     'start:server',
     'watch',
     cb);
