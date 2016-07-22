@@ -7,11 +7,11 @@
 <form>
   <input ng-model="expense.name" type="text" placeholder="{{expense.name}}" />
   <input ng-model="expense.amount" type="text" placeholder="{{expense.amount}}" />
-  <button ng-click="editExpense(expense)" style="width:100px; background-color: yellow"> Edit Expense</button>
-  <button ng-click="deleteExpense()" style="margin-left: 50px;width:100px; background-color: red"> Delete</button>
+  <md-button ng-click="editExpense(expense)" style="background-color: yellow"> Edit Expense</md-button>
+  <md-button ng-click="deleteExpense()" style="margin-left: 50px; background-color: red"> Delete</md-button>
   <br>
   <br>
-  <button ng-click="toPool()" style="height:50px;width:100px; background-color: grey"> Back</button>
+  <md-button ng-click="toPool()" style="height:50px;background-color: grey"> Back</md-button>
 </form>
 
 

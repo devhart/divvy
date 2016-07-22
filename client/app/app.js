@@ -7,10 +7,15 @@ angular.module('app', [
 	'newPoolApp', 
 	'updatePoolApp',
 	'ngResource',
-	'ngCookies'
+	'ngCookies',
+	'ngMaterial'
 ])
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $mdThemingProvider) {
+
+	$mdThemingProvider.theme('default')
+	    .primaryPalette('blue')
+	    .accentPalette('red');
 
 	$urlRouterProvider.otherwise(function($injector) {
 		$injector.get('$state').go('poolsState');
@@ -165,6 +170,7 @@ angular.module('app', [
 		console.log('next.auth', next.auth);
 		console.log('!Auth.isLoggedIn()', !Auth.isLoggedIn())
 		if (next.auth && !Auth.isLoggedIn()) { // only checking via auth servcie
+			event.preventDefault();
 			$state.go('loginState');
 		}
 	});
