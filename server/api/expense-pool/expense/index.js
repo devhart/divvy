@@ -1,23 +1,23 @@
+/**
+ * POST  /api/expense-pools/:id/expenses            -> create
+ * GET   /api/expense-pools/:id/expenses            -> all expenses for a pool
+ * GET   /api/expense-pools/:id/expenses/:expenseId -> get
+ * PUT   /api/expense-pools/:id/expenses/:expenseId -> update
+ * PATCH /api/expense-pools/:id/expenses/:expenseId -> update
+ */
+
 import express from 'express';
 import controller from './expense.controller';
 
-const router = express.Router({ mergeParams: true });
+const router = express.Router();
 
-// POST => Add an expense to a specific pool
-router.post('/', controller.addExpense);
+router.post('/', controller.create);
 
-// GET => All expenses associated with the provided expense-pool
-router.get('/', controller.getExpenses);
+router.get('/', controller.all);
 
-/**
- * PUT / PATCH => Edit single record
- * Request body should be key-value pairs of attributes to update
- * Returns a 204 status on success
- */
-router.put('/:expenseId', controller.editExpense);
-router.patch('/:expenseId', controller.editExpense);
+router.get('/:expenseId', controller.get);
 
-// GET => Specific expense
-router.get('/:expenseId', controller.getOneExpense);
+router.put('/:expenseId', controller.update);
+router.patch('/:expenseId', controller.update);
 
 export default router;
