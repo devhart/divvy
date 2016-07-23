@@ -16,7 +16,7 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
     .primaryPalette('blue')
     .accentPalette('red');
 
-  $urlRouterProvider.otherwise(function goToPoolState($injector) {
+  $urlRouterProvider.otherwise(function goToPoolsState($injector) {
     $injector.get('$state').go('poolsState');
   });
   // $locationProvider.html5Mode(true);

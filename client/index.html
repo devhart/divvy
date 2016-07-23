@@ -2,26 +2,17 @@
 <html>
 <head>
   <base href="/">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
   <!-- endbower -->
   <link rel="stylesheet" href="assets/css/app.css">
   <!-- injector:css -->
   <!-- endinjector -->
 </head>
-<body ng-app = "app">
-  <ul class="nav navbar-nav navbar-right">
-    <li ng-if="auth.isLoggedIn()"><a href="">Hello {{ auth.getCurrentUser().name }}</a></li>
-    <li ng-if="auth.isLoggedIn()"><a href="" ng-mousedown="auth.logout()">Logout</a></li>
-    <li ng-if="!auth.isLoggedIn()"><a href="" ng-mousedown="auth.login()">Login</a></li>
-  </ul>
-  <md-toolbar layout="row">
-  <h1> Divvy Up!!! </h1>
-  </md-toolbar>
- <!--  <md-sidenav md-is-locked-open="true" class="md-whiteframe-z2"></md-sidenav>
-  <md-content flex id="content">
-  </md-content> -->
-  <div ui-view></div>
+<body ng-app="app" ng-cloak layout="column">
+  <div ui-view flex layout="column"></div>
 
   <!-- bower:js -->
   <script src="bower_components/angular/angular.js"></script>
@@ -37,6 +28,8 @@
   <script src="app/app.js"></script>
   <!-- injector:js -->
   <script src="app/routes.js"></script>
+  <script src="app/main/main.controller.js"></script>
+  <script src="app/main/main.js"></script>
   <script src="app/components/login/login.js"></script>
   <script src="app/components/newExpenses/newExpenses.js"></script>
   <script src="app/components/newExpenses/newExpenses.services.js"></script>
