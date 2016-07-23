@@ -141,7 +141,7 @@ gulp.task('inject:js', () => {
       {
         starttag: '<!-- injector:js -->',
         endtag: '<!-- endinjector -->',
-        transform: (filepath) => `<script src="${filepath.replace(/\/client\//, '')}"></script>`
+        transform: (filepath) => `<script src="${filepath.replace('/client/', '')}"></script>`
       }))
     .pipe(gulp.dest('client/'));
 });
@@ -152,14 +152,17 @@ gulp.task('inject:css', () => {
       {
         starttag: '<!-- injector:css -->',
         endtag: '<!-- endinjector -->',
-        transform: (filepath) => `<link rel="stylesheet" href="${filepath.replace(/\/client\//, '')}">`
+        transform: (filepath) => `<link rel="stylesheet" href="${filepath.replace('/client/', '')}">`
       }))
     .pipe(gulp.dest('client/'));
 });
 
 gulp.task('wiredep', () => {
   return gulp.src(paths.client.indexHtml)
-    .pipe(plugins.wiredep())
+    .pipe(plugins.wiredep({
+      directory: 'client/bower_components',
+      ignorePath: 'client/bower_components/'
+    }))
     .pipe(gulp.dest('client/'));
 });
 
@@ -183,7 +186,8 @@ gulp.task('mocha:unit', () => {
 gulp.task('default', cb => {
   runSequence('env:all',
     'lint',
-    ['inject', 'wiredep'],
+    'inject',
+    'wiredep',
     'start:server',
     'watch',
     cb);
