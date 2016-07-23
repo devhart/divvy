@@ -9,15 +9,17 @@
 import express from 'express';
 import controller from './expense.controller';
 
+import { isPoolExpense, isExpenseUser } from './expense.auth';
+
 const router = express.Router();
 
 router.post('/', controller.create);
 
 router.get('/', controller.all);
 
-router.get('/:expenseId', controller.get);
+router.get('/:expenseId', isPoolExpense(), controller.get);
 
-router.put('/:expenseId', controller.update);
-router.patch('/:expenseId', controller.update);
+router.put('/:expenseId', isExpenseUser(), controller.update);
+router.patch('/:expenseId', isExpenseUser(), controller.update);
 
 export default router;
