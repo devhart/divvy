@@ -2,7 +2,12 @@
 <html>
 <head>
   <base href="/">
-  <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css"
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+  <!-- endbower -->
+  <link rel="stylesheet" href="assets/css/app.css">
+  <!-- injector:css -->
+  <!-- endinjector -->
 </head>
 <body ng-app = "app">
   <ul class="nav navbar-nav navbar-right">
@@ -16,25 +21,30 @@
  <!--  <md-sidenav md-is-locked-open="true" class="md-whiteframe-z2"></md-sidenav>
   <md-content flex id="content">
   </md-content> -->
-    <div ui-view></div>
+  <div ui-view></div>
 
-  <script src="/bower_components/angular/angular.js"></script>
-  <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
-  <script src="/bower_components/angular-resource/angular-resource.js"></script>
-  <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="/bower_components/angular-animate/angular-animate.js"></script>
-  <script src="/bower_components/angular-aria/angular-aria.js"></script>
-  <script src="/bower_components/angular-messages/angular-messages.js"></script>
-  <script src="/bower_components/angular-material/angular-material.js"></script>
-    
-  <script src="/app/app.js"></script>
-  <script src="/app/components/pool/pool.js"></script>
-  <script src="/app/components/pools/pools.js"></script>
-  <script src="/app/components/newpool/newpool.js"></script>
-  <script src="/app/components/updatepool/updatepool.js"></script>
-  <script src="/app/components/newExpenses/newExpenses.js"></script>
-  <script src="/app/components/updateExpenses/updateExpenses.js"></script>
-  <script src="/app/components/newExpenses/newExpenses.services.js"></script>
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-material/angular-material.js"></script>
+  <!-- endbower -->
 
+  <script src="app/app.js"></script>
+  <!-- injector:js -->
+  <script src="app/routes.js"></script>
+  <script src="app/components/login/login.js"></script>
+  <script src="app/components/newExpenses/newExpenses.js"></script>
+  <script src="app/components/newExpenses/newExpenses.services.js"></script>
+  <script src="app/components/newpool/newpool.js"></script>
+  <script src="app/components/pool/pool.js"></script>
+  <script src="app/components/pools/pools.js"></script>
+  <script src="app/components/updateExpenses/updateExpenses.js"></script>
+  <script src="app/components/updatepool/updatepool.js"></script>
+  <!-- endinjector -->
 </body>
 </html>
