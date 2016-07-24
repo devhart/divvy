@@ -3,10 +3,9 @@ var app = angular.module('app', [
   'ngResource',
   'ui.router',
   'app.auth',
-  'poolApp',
   'newExpenseApp',
   'updateExpenseApp',
-  'poolsApp',
+  'poolApp',
   'newPoolApp',
   'updatePoolApp'
 ]);
@@ -25,16 +24,6 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
       controller: function logoutController($state, Auth) {
         Auth.logout();
         $state.go('main');
-      }
-    })
-    .state('poolsState', {
-      url: '/pools',
-      templateUrl: './app/components/pools/pools.html',
-      controller: 'poolsCtrl',
-      resolve: {
-        auth: ['Auth', function auth(Auth) {
-          return Auth.required();
-        }]
       }
     })
     .state('newPoolState', {
