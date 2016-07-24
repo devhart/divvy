@@ -8,7 +8,7 @@
     <md-list class="md-dense">
       <md-subheader class="md-no-sticky">Expense Pools</md-subheader>
       <md-list-item class="secondary-button-padding md-2-line" ng-click="goToPoolDetail($event, pool)"
-                    ng-repeat="(index, pool) in pools">
+                    ng-repeat="pool in pools | orderBy : 'createdAt' : '-'">
         <div class="md-list-item-text" layout="column">
           <h2>{{ pool.name }}</h2>
           <md-chips flex class="md-contact-chips" ng-model="pool.Users" readonly="true" hide-xs hide-sm>
