@@ -10,7 +10,6 @@ export default (User, config) => {
   };
 
   const handler = (accessToken, refreshToken, profile, done) => {
-    console.log(profile);
     User.find({ where: { facebookId: profile.id } })
       .then(user => {
         if (user) {
