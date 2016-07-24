@@ -22,5 +22,5 @@ export default app => {
    * Assume all other requests are for indicating application state. Send index.html and let
    * client update the state based on the url.
    */
-  app.route('/*').get((req, res) => res.sendfile(`${app.get('clientPath')}/index.html`));
+  app.route('/*').get((req, res) => res.sendFile(`${app.get('clientPath')}/index.html`));
 };
