@@ -38,12 +38,25 @@ module.factory('Auth', function Auth($cookies, $q, $window, User) {
     });
   };
 
+  var required = function authRequired() {
+    var deferred = $q.defer();
+    isLoggedInAsync().then(function handleLoginState(loggedIn) {
+      if (loggedIn) {
+        deferred.resolve({});
+      } else {
+        deferred.reject({redirectTo: 'login'});
+      }
+    });
+    return deferred.promise;
+  };
+
   return {
     logout: logout,
     login: login,
     getCurrentUser: getCurrentUser,
     getCurrentUserAsync: getCurrentUserAsync,
     isLoggedIn: isLoggedIn,
-    isLoggedInAsync: isLoggedInAsync
+    isLoggedInAsync: isLoggedInAsync,
+    required: required
   };
 });
