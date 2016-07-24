@@ -74,7 +74,7 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
 
 
   $urlRouterProvider.otherwise(function goToPoolsState($injector) {
-    $injector.get('$state').go('poolsState');
+    $injector.get('$state').go('main');
   });
 });
 
