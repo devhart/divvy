@@ -18,7 +18,8 @@ app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $sta
     $mdDialog.show(addPoolOptions).then(function handleOk(result) {
       if (result) {
         ExpensePool.save({}, { name: result }).$promise.then(function handleSave(response) {
-          $scope.goToPoolDetail(null, response.expensePool);
+          $scope.pools.unshift(response);
+          $scope.goToPoolDetail(null, response);
         });
       }
     });
