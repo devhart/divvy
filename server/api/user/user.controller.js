@@ -25,7 +25,8 @@ controller.me = (req, res) => {
 };
 
 controller.myPools = (req, res) => {
-  req.user.getExpensePools()
+  // TODO: Fix this atomic inclusion of all nested associations (be more specific).
+  req.user.getExpensePools({ include: [{ all: true, nested: true }] })
     .then(expensePools => res.json(expensePools))
     .catch(handleError(res));
 };

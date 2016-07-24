@@ -30,14 +30,9 @@ app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $sta
 });
 
 app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $stateParams, ExpensePool, Expense) {
-  ExpensePool.get({ expensePoolId: $stateParams.expensePoolId }).$promise
-    .then(function handleResponse(pool) {
-      $scope.images = {};
-      pool.Users.forEach(function addAvatarImage(user) {
-        $scope.images[user._id] = JSON.parse(user.facebook).picture.data.url;
-      });
-      $scope.pool = pool;
-    });
+  ExpensePool.get({ expensePoolId: $stateParams.expensePoolId }).$promise.then(function handleResponse(pool) {
+    $scope.pool = pool;
+  });
 
   $scope.addExpense = function addExpense(e) {
     // TODO: Update this with custom template to include amount
@@ -52,7 +47,7 @@ app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $s
 
     $mdDialog.show(addExpenseOptions).then(function handleOk(result) {
       if (result) {
-        Expense.save({expensePoolId: $scope.pool._id}, { name: result }).$promise.then(function handleSave(response) {
+        Expense.save({ expensePoolId: $scope.pool._id }, { name: result }).$promise.then(function handleSave(response) {
           $scope.pool.Expenses.unshift(response);
         });
       }
