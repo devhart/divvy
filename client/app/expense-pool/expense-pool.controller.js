@@ -18,13 +18,13 @@ app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $sta
     $mdDialog.show(addPoolOptions).then(function handleOk(result) {
       if (result) {
         ExpensePool.save({}, { name: result }).$promise.then(function handleSave(response) {
-          $scope.goToPoolDetail(response.expensePool);
+          $scope.goToPoolDetail(null, response.expensePool);
         });
       }
     });
   };
 
-  $scope.goToPoolDetail = function goToPool(pool) {
+  $scope.goToPoolDetail = function goToPool(event, pool) {
     $state.go('expense-pools.detail', { expensePoolId: pool._id });
   };
 });
@@ -40,7 +40,7 @@ app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $s
     });
 
   $scope.addExpense = function addExpense(e) {
-    // TODO: Update this with custome template to include amount
+    // TODO: Update this with custom template to include amount
     var addExpenseOptions = $mdDialog.prompt()
       .title('Add a new expense')
       .textContent('Choose a name...')

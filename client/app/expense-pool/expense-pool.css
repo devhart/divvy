@@ -6,8 +6,19 @@ pools .actions button {
   width: 200px;
 }
 
+pools .expense-pool-list,
 pools .expense-list {
   text-align: left;
   width: 100%;
   max-width: 90%;
+}
+
+pools h2 {
+  font-weight: 200;
+  color: #4f5b66;
+  margin: 10px;
+}
+
+pools .fixedRows {
+  height: 250px;
 }
