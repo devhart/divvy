@@ -4,7 +4,7 @@ app.config(function config($stateProvider) {
   $stateProvider.state('expense-pools', {
     url: '/expense-pools',
     abstract: true,
-    template: '<ui-view flex layout></ui-view>',
+    template: '<pools flex layout="column"></pools>',
     resolve: {
       authRequired: function authRequired(Auth) {
         return Auth.required();
@@ -13,20 +13,17 @@ app.config(function config($stateProvider) {
   }).state('expense-pools.list', {
     parent: 'expense-pools',
     url: '',
-    template: '<pools-list flex layout></pools-list>'
+    templateUrl: 'app/expense-pool/expense-pool.list.html',
+    controller: 'ExpensePoolListCtrl'
   }).state('expense-pools.detail', {
     parent: 'expense-pools',
     url: '/:expensePoolId',
-    template: '<pools-detail flex layout></pools-detail>'
+    templateUrl: 'app/expense-pool/expense-pool.detail.html',
+    controller: 'ExpensePoolDetailCtrl'
   });
 });
 
-app.component('poolsList', {
-  templateUrl: 'app/expense-pool/expense-pool.list.html',
-  controller: 'ExpensePoolListCtrl'
-});
-
-app.component('poolsDetail', {
-  templateUrl: 'app/expense-pool/expense-pool.detail.html',
-  controller: 'ExpensePoolDetailCtrl'
+app.component('pools', {
+  templateUrl: 'app/expense-pool/expense-pool.html',
+  controller: 'ExpensePoolCtrl'
 });
