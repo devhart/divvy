@@ -22,3 +22,8 @@ pools h2 {
 pools .fixedRows {
   height: 250px;
 }
+
+pools .md-chips .md-chip,
+pools .md-chips:not(.md-readonly) {
+  cursor: pointer;
+}

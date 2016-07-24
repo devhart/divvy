@@ -10,6 +10,7 @@ export default (User, config) => {
   };
 
   const handler = (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
     User.find({ where: { facebookId: profile.id } })
       .then(user => {
         if (user) {
@@ -20,6 +21,7 @@ export default (User, config) => {
           name: profile.displayName,
           email: profile.emails[0].value,
           facebookId: profile.id,
+          imageUrl: profile.photos[0].value,
           facebook: profile._json,
         });
         return newUser.save()

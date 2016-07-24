@@ -9,7 +9,8 @@ import { handleError, handleNotFound } from '../../../utils';
  * req with found expense.
  */
 const decorateWithExpense = (req, res, next) => {
-  Expense.findById(req.params.expenseId)
+  // TODO: Fix this atomic inclusion of all nested associations (be more specific).
+  Expense.findById(req.params.expenseId, { include: [{ all: true, nested: true }] })
     .then(handleNotFound(res))
     .then(expense => {
       if (expense) {

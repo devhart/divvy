@@ -10,7 +10,17 @@
       <md-list-item class="secondary-button-padding md-2-line" ng-click="goToPoolDetail($event, pool)"
                     ng-repeat="(index, pool) in pools">
         <div class="md-list-item-text" layout="column">
-          <h3>{{ pool.name }}</h3>
+          <h2>{{ pool.name }}</h2>
+          <md-chips flex class="md-contact-chips" ng-model="pool.Users" readonly="true" hide-xs hide-sm>
+            <md-chip-template>
+              <div class="md-contact-avatar">
+                <img ng-src="{{$chip.imageUrl}}" alt="{{$chip.name}}" ng-if="$chip.imageUrl" />
+              </div>
+              <div class="md-contact-name">
+                {{$chip.name}}
+              </div>
+            </md-chip-template>
+          </md-chips>
         </div>
         <md-divider></md-divider>
       </md-list-item>

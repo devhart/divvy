@@ -17,6 +17,7 @@ export default function User(sequelize, DataTypes) {
       },
     },
     facebookId: DataTypes.STRING,
+    imageUrl: DataTypes.STRING,
     facebook: DataTypes.JSON,
   });
 }
