@@ -133,7 +133,7 @@ gulp.task('watch', () => {
   gulp.watch('bower.json', ['wiredep']);
 });
 
-gulp.task('inject', cb => runSequence(['inject:js', 'inject:css'], cb));
+gulp.task('inject', cb => runSequence('inject:js', 'inject:css', cb));
 
 gulp.task('inject:js', () => {
   return gulp.src(paths.client.indexHtml)

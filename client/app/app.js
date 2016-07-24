@@ -19,7 +19,8 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
   $urlRouterProvider.otherwise(function goToPoolsState($injector) {
     $injector.get('$state').go('poolsState');
   });
-  // $locationProvider.html5Mode(true);
+
+  $locationProvider.html5Mode(true);
 
   $httpProvider.interceptors.push('authInterceptor');
   $stateProvider
