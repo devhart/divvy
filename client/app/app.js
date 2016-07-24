@@ -73,7 +73,7 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
     });
 
 
-  $urlRouterProvider.otherwise(function goToPoolsState($injector) {
+  $urlRouterProvider.otherwise(function goToMain($injector) {
     $injector.get('$state').go('main');
   });
 });
@@ -104,7 +104,7 @@ app.factory('db', function db() {
   return obj;
 });
 
-app.run(function run($rootScope, $state, Auth) {
+app.run(function run($rootScope, $state, $q, Auth) {
   $rootScope.$on('$stateChangeStart', function handleStartChangeState(event, next) {
     if (next.auth) {
       Auth.isLoggedInAsync().then(function handleLoginStatus(loggedIn) {
@@ -115,6 +115,15 @@ app.run(function run($rootScope, $state, Auth) {
       });
     }
   });
+
+  $rootScope.$on('$stateChangeError',
+    function handleStateChangeError(event, toState, toParams, fromState, fromParams, error) {
+      if (error.redirectTo) {
+        $state.go(error.redirectTo);
+      } else {
+        $state.go('error', { status: error.status });
+      }
+    });
 });
 
 // Create modules here to prevent ordering issues with injecting module files.
