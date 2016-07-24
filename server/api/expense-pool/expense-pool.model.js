@@ -7,5 +7,7 @@ export default function ExpensePool(sequelize, DataTypes) {
       autoIncrement: true,
     },
     name: DataTypes.STRING,
+  }, {
+    timestamps: true,
   });
 }

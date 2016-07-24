@@ -10,5 +10,7 @@ export default function Expense(sequelize, DataTypes) {
     description: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
     paid: DataTypes.BOOLEAN,
+  }, {
+    timestamps: true,
   });
 }
