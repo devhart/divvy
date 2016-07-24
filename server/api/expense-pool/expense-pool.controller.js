@@ -4,16 +4,12 @@ import { handleError } from '../../utils';
 const controller = {};
 
 controller.create = (req, res) => {
-  const obj = {};
+  const opts = { include: [{ all: true, nested: true }] };
   ExpensePool.create(req.body)
-    .then(expensePool => {
-      obj.expensePool = expensePool;
-      return expensePool.addUser(req.user);
-    })
-    .then(expensePoolUsers => {
-      obj.expensePoolUsers = expensePoolUsers;
-      res.json(obj);
-    })
+    .then(expensePool => (req.expensePool = expensePool))
+    .then(expensePool => expensePool.addUser(req.user))
+    .then(() => ExpensePool.findById(req.expensePool._id, opts))
+    .then(expensePool => res.json(expensePool))
     .catch(handleError(res));
 };
 
