@@ -1,5 +1,5 @@
 import compose from 'composable-middleware';
-import { ExpensePool } from '../../db';
+import { ExpensePool, Expense, User } from '../../db';
 import { handleError, handleNotFound } from '../../utils';
 
 /**
@@ -9,7 +9,7 @@ import { handleError, handleNotFound } from '../../utils';
  * req with found pool.
  */
 const decorateWithPool = (req, res, next) => {
-  ExpensePool.findById(req.params.id)
+  ExpensePool.find({ where: { _id: req.params.id }, include: [User, Expense] })
     .then(handleNotFound(res))
     .then(pool => {
       if (pool) {

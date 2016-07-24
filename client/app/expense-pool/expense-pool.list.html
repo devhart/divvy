@@ -1,18 +1,21 @@
 <div flex layout="column" layout-align="start center">
   <h2>Expense Pools</h2>
-  <md-button class="md-primary md-raised" ng-click="addPool($event)"  >
-    Add Expense Pool
-  </md-button>
-  <table border= 5 WIDTH="100%"   CELLPADDING="4" CELLSPACING="3" >
+  <div class="actions" layout>
+    <md-button class="md-primary md-raised" ng-click="addPool($event)">
+      Add Expense Pool
+    </md-button>
+  </div>
+  <md-content>
+    <table border=5 WIDTH="100%" CELLPADDING="4" CELLSPACING="3">
 
-    <tr>
-      <th width= 5% > </th>
-      <th width= 40%> Name </th>
-      <th width= 10% > Status </th>
-      <th width= 10% > </th>
-    </tr>
+      <tr>
+        <th width=5%></th>
+        <th width=40%> Name</th>
+        <th width=10%> Status</th>
+        <th width=10%></th>
+      </tr>
 
-      <tr ng-repeat= "pool in pools track by $index">
+      <tr ng-repeat="pool in pools track by $index">
         <td>
           <md-button class="md-primary" ng-click="editPool(pool.id)"> Edit Pool</md-button>
         </td>
@@ -22,9 +25,10 @@
         <td style="text-align:center">
           {{pool.status}}
         </td>
-        <td style= "text-align:center">
+        <td style="text-align:center">
           <a href="" ng-click="goToPoolDetail(pool)">See Details</a>
         </td>
       </tr>
-  </table>
+    </table>
+  </md-content>
 </div>
