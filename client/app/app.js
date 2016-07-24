@@ -16,10 +16,6 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
     .primaryPalette('blue')
     .accentPalette('red');
 
-  $urlRouterProvider.otherwise(function goToPoolsState($injector) {
-    $injector.get('$state').go('poolsState');
-  });
-
   $locationProvider.html5Mode(true);
 
   $httpProvider.interceptors.push('authInterceptor');
@@ -27,7 +23,17 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
     .state('loginState', {
       url: '/login',
       auth: false,
-      templateUrl: './app/components/login/login.html'
+      templateUrl: './app/components/login/login.html',
+      controller: function loginStateCtrl($scope, Auth) {
+        $scope.login = Auth.login;
+      }
+    })
+    .state('logout', {
+      url: '/logout',
+      controller: function logoutController($state, Auth) {
+        Auth.logout();
+        $state.go('main');
+      }
     })
     .state('poolsState', {
       url: '/pools',
@@ -73,6 +79,11 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
         expenseid: null
       }
     });
+
+
+  $urlRouterProvider.otherwise(function goToPoolsState($injector) {
+    $injector.get('$state').go('poolsState');
+  });
 });
 
 app.factory('db', function db() {
@@ -116,9 +127,13 @@ app.factory('User', function User($resource) {
 
 app.run(function run($rootScope, $state, Auth) {
   $rootScope.$on('$stateChangeStart', function handleStartChangeState(event, next) {
-    if (next.auth && !Auth.isLoggedIn()) {
-      event.preventDefault();
-      $state.go('loginState');
+    if (next.auth) {
+      Auth.isLoggedInAsync().then(function handleLoginStatus(loggedIn) {
+        if (!loggedIn) {
+          event.preventDefault();
+          $state.go('loginState');
+        }
+      });
     }
   });
 });
