@@ -1,8 +1,10 @@
 var app = angular.module('app');
 
-app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $state, ExpensePool, User) {
+app.controller('ExpensePoolCtrl', function PoolsCtrl($scope, User) {
   $scope.pools = User.expensePools();
+});
 
+app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $state, ExpensePool) {
   $scope.addPool = function addPool(e) {
     var addPoolPromptOptions = $mdDialog.prompt()
       .title('Add a new expense pool')
