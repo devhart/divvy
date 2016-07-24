@@ -16,7 +16,7 @@ module.factory('authInterceptor', function authInterceptor($rootScope, $q, $cook
       if (response.status === 401) {
         $cookies.remove('token');
         // Use injector to get around circular dependency.
-        $injector.get('$state').go('loginState');
+        $injector.get('$state').go('login');
       }
       return $q.reject(response);
     }
