@@ -104,19 +104,6 @@ app.factory('db', function db() {
   return obj;
 });
 
-app.factory('User', function User($resource) {
-  return $resource('/api/users/:userId/:controller', {
-    userId: '@_id'
-  }, {
-    me: {
-      method: 'GET',
-      params: {
-        controller: 'me'
-      }
-    }
-  });
-});
-
 app.run(function run($rootScope, $state, Auth) {
   $rootScope.$on('$stateChangeStart', function handleStartChangeState(event, next) {
     if (next.auth) {
@@ -132,4 +119,4 @@ app.run(function run($rootScope, $state, Auth) {
 
 // Create modules here to prevent ordering issues with injecting module files.
 
-angular.module('app.auth', ['ngCookies']);
+angular.module('app.auth', ['ngCookies', 'ngResource']);
