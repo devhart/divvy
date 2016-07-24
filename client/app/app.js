@@ -31,7 +31,11 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
       url: '/pools',
       templateUrl: './app/components/pools/pools.html',
       controller: 'poolsCtrl',
-      auth: true
+      resolve: {
+        auth: ['Auth', function auth(Auth) {
+          return Auth.required();
+        }]
+      }
     })
     .state('newPoolState', {
       url: '/newPool',
@@ -104,18 +108,7 @@ app.factory('db', function db() {
   return obj;
 });
 
-app.run(function run($rootScope, $state, $q, Auth) {
-  $rootScope.$on('$stateChangeStart', function handleStartChangeState(event, next) {
-    if (next.auth) {
-      Auth.isLoggedInAsync().then(function handleLoginStatus(loggedIn) {
-        if (!loggedIn) {
-          event.preventDefault();
-          $state.go('login');
-        }
-      });
-    }
-  });
-
+app.run(function run($rootScope, $state) {
   $rootScope.$on('$stateChangeError',
     function handleStateChangeError(event, toState, toParams, fromState, fromParams, error) {
       if (error.redirectTo) {
