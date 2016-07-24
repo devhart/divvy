@@ -1,13 +1,12 @@
-<div class="col-sm-12">
-  <br>
-  <text> Welcome to Divvy Up!</text>
-  <br>
-  <text> Use Divvy Up to easily divide up payments with your friends.</text>
-  <div class="col-sm-12">
-    <div class="btn btn-block btn-social">
-      <br>
-      <span class="fa fa-facebook"></span>
-      <button ng-click="login.facebook()">Sign in with Facebook</button>
-    </div>
+<div layout="column">
+  <div class="social-buttons">
+    <a href="" ng-click="login.facebook()" class="social-button facebook"><i class="fa fa-facebook"></i></a>
+  </div>
+  <h4>Login with Facebook to get started</h4>
+  <div class="icons">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+        </span>
   </div>
 </div>

@@ -20,14 +20,6 @@ app.config(function config($stateProvider, $urlRouterProvider, $httpProvider, $l
 
   $httpProvider.interceptors.push('authInterceptor');
   $stateProvider
-    .state('loginState', {
-      url: '/login',
-      auth: false,
-      templateUrl: './app/components/login/login.html',
-      controller: function loginStateCtrl($scope, Auth) {
-        $scope.login = Auth.login;
-      }
-    })
     .state('logout', {
       url: '/logout',
       controller: function logoutController($state, Auth) {
@@ -131,7 +123,7 @@ app.run(function run($rootScope, $state, Auth) {
       Auth.isLoggedInAsync().then(function handleLoginStatus(loggedIn) {
         if (!loggedIn) {
           event.preventDefault();
-          $state.go('loginState');
+          $state.go('login');
         }
       });
     }
