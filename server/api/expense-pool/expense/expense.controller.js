@@ -7,7 +7,8 @@ controller.create = (req, res) => {
   Expense.create(req.body)
     .then(expense => expense.setUser(req.user)
       .then(() => req.expensePool.addExpense(expense))
-      .then(() => res.json(expense)))
+      .then(() => Expense.findById(expense._id, { include: [{ all: true, nested: true }] }))
+      .then(updated => res.json(updated)))
     .catch(handleError(res));
 };
 
