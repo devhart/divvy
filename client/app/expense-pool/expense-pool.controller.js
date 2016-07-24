@@ -6,7 +6,7 @@ app.controller('ExpensePoolCtrl', function PoolsCtrl($scope, User) {
 
 app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $state, ExpensePool) {
   $scope.addPool = function addPool(e) {
-    var addPoolPromptOptions = $mdDialog.prompt()
+    var addPoolOptions = $mdDialog.prompt()
       .title('Add a new expense pool')
       .textContent('Choose a name...')
       .placeholder('Expense pool name')
@@ -15,9 +15,9 @@ app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $sta
       .ok('Create!')
       .cancel('Cancel');
 
-    $mdDialog.show(addPoolPromptOptions).then(function handlePromptOk(result) {
+    $mdDialog.show(addPoolOptions).then(function handleOk(result) {
       if (result) {
-        ExpensePool.save({}, {name: result}).$promise.then(function handleSave(response) {
+        ExpensePool.save({}, { name: result }).$promise.then(function handleSave(response) {
           $scope.goToPoolDetail(response.expensePool);
         });
       }
@@ -29,6 +29,33 @@ app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $sta
   };
 });
 
-app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $stateParams, ExpensePool) {
-  $scope.pool = ExpensePool.get({expensePoolId: $stateParams.expensePoolId});
+app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $stateParams, ExpensePool, Expense) {
+  ExpensePool.get({ expensePoolId: $stateParams.expensePoolId }).$promise
+    .then(function handleResponse(pool) {
+      $scope.images = {};
+      pool.Users.forEach(function addAvatarImage(user) {
+        $scope.images[user._id] = JSON.parse(user.facebook).picture.data.url;
+      });
+      $scope.pool = pool;
+    });
+
+  $scope.addExpense = function addExpense(e) {
+    // TODO: Update this with custome template to include amount
+    var addExpenseOptions = $mdDialog.prompt()
+      .title('Add a new expense')
+      .textContent('Choose a name...')
+      .placeholder('Expense name')
+      .ariaLabel('Expense name')
+      .targetEvent(e)
+      .ok('Create!')
+      .cancel('Cancel');
+
+    $mdDialog.show(addExpenseOptions).then(function handleOk(result) {
+      if (result) {
+        Expense.save({expensePoolId: $scope.pool._id}, { name: result }).$promise.then(function handleSave(response) {
+          $scope.pool.Expenses.unshift(response);
+        });
+      }
+    });
+  };
 });

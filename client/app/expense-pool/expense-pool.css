@@ -2,6 +2,12 @@ pools {
   text-align: center;
 }
 
-pools button {
+pools .actions button {
   width: 200px;
+}
+
+pools .expense-list {
+  text-align: left;
+  width: 100%;
+  max-width: 90%;
 }
