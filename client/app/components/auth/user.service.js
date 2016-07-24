@@ -15,7 +15,8 @@ app.factory('User', function User($resource) {
       params: {
         controller: 'me',
         selector: 'expense-pools'
-      }
+      },
+      isArray: true
     }
   });
 });

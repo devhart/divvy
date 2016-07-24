@@ -5,13 +5,13 @@ app.config(function config($stateProvider) {
     url: '/',
     template: '<main flex layout></main>',
     resolve: {
-      redirectToPools: ['$q', 'Auth', function redirectToPools($q, Auth) {
+      redirectToPoolsList: function redirectToPoolsList($q, Auth) {
         var deferred = $q.defer();
         Auth.isLoggedInAsync().then(function handleLoginState(loggedIn) {
-          loggedIn ? deferred.reject({ redirectTo: 'poolsState' }) : deferred.resolve();
+          loggedIn ? deferred.reject({ redirectTo: 'expense-pools.list' }) : deferred.resolve();
         });
         return deferred.promise;
-      }]
+      }
     }
   });
 });
