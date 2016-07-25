@@ -19,11 +19,57 @@ pools h2 {
   margin: 10px;
 }
 
-pools .fixedRows {
-  height: 250px;
-}
-
 pools .md-chips .md-chip,
 pools .md-chips:not(.md-readonly) {
   cursor: pointer;
+}
+
+.members-list {
+  width: 100%;
+  max-width: 90%;
+}
+
+.members-list .md-item-text.compact {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.members-list .contact-item {
+  box-sizing: border-box;
+}
+
+.members-list .contact-item .md-list-item-text {
+  padding: 14px 0;
+  max-width: 190px;
+}
+
+.members-list .contact-item .md-list-item-text h3 {
+  margin: 0 !important;
+  padding: 0;
+  line-height: 1.2em !important;
+}
+
+.members-list .contact-item .md-list-item-text h3, .members-list .contact-item .md-list-item-text p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media (min-width: 960px) {
+  .members-list .contact-item {
+    float: left;
+    width: 33%;
+  }
+}
+
+.members-list md-contact-chips {
+  margin-bottom: 10px;
+}
+
+.members-list .md-chips {
+  padding: 5px 0 8px;
+}
+
+.members-list .fixedRows {
+  height: 250px;
 }

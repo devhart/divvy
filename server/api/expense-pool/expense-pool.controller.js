@@ -33,8 +33,9 @@ controller.addUser = (req, res) => {
         return res.status(403).send('User already exists in pool');
       }
       return User.findById(req.body.userId)
-        .then(userToAdd => req.expensePool.addUser(userToAdd))
-        .then(() => res.sendStatus(201));
+        .then(found => (req.found = found))
+        .then(found => req.expensePool.addUser(found))
+        .then(() => res.json(req.found));
     })
     .catch(handleError(res));
 };

@@ -35,6 +35,7 @@ app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $m
     $scope.pool = pool;
   });
 
+  // TODO: The two dialog functions could be generalized into a dialog service to keep DRY.
   $scope.addExpense = function addExpense(e) {
     $mdDialog.show({
       controller: 'AddExpensePoolExpenseDialogCtrl',
@@ -49,6 +50,25 @@ app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $m
     }).then(function handleHide(result) {
       if (result) {
         $scope.pool.Expenses.unshift(result);
+      }
+    });
+  };
+
+  $scope.addUsers = function addExpense(e) {
+    $mdDialog.show({
+      controller: 'AddExpensePoolUsersDialogCtrl',
+      templateUrl: 'app/expense-pool/user/user.add-dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: e,
+      clickOutsideToClose: true,
+      fullscreen: $mdMedia('sm') || $mdMedia('xs'),
+      locals: {
+        expensePool: $scope.pool
+      }
+    }).then(function handleHide(results) {
+      console.log(results);
+      if (results && results.length) {
+        [].push.apply($scope.pool.Users, results);
       }
     });
   };

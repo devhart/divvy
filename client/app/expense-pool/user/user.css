@@ -1,0 +1,65 @@
+.user-dialog .content-container {
+  padding: 10px;
+}
+
+.user-dialog md-content.autocomplete {
+  min-height: 250px;
+}
+
+.user-dialog md-content.autocomplete input {
+  min-width: 400px;
+}
+
+.user-dialog .md-item-text.compact {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.user-dialog .contact-item {
+  box-sizing: border-box;
+}
+
+.user-dialog .contact-item.selected {
+  opacity: 0.5;
+}
+
+.user-dialog .contact-item.selected h3 {
+  opacity: 0.5;
+}
+
+.user-dialog .contact-item .md-list-item-text {
+  padding: 14px 0;
+  max-width: 190px;
+}
+
+.user-dialog .contact-item .md-list-item-text h3 {
+  margin: 0 !important;
+  padding: 0;
+  line-height: 1.2em !important;
+}
+
+.user-dialog .contact-item .md-list-item-text h3, .user-dialog .contact-item .md-list-item-text p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media (min-width: 960px) {
+  .user-dialog .contact-item {
+    float: left;
+    width: 33%;
+  }
+}
+
+.user-dialog md-contact-chips {
+  margin-bottom: 10px;
+}
+
+.user-dialog .md-chips {
+  padding: 5px 0 8px;
+}
+
+.user-dialog .fixedRows {
+  height: 250px;
+  overflow: hidden;
+}

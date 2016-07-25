@@ -1,0 +1,62 @@
+<md-dialog aria-label="Invite friends" class="user-dialog" ng-cloak>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Invite Some Friends</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-set="material-icons" class="md-24">clear</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="content-container">
+    <div flex layout="column" layout-padding>
+      <md-subheader class="md-no-sticky">Expense Pool Members</md-subheader>
+      <md-chips flex class="md-contact-chips" ng-model="pool.Users" readonly="true">
+        <md-chip-template>
+        <div class="md-contact-avatar">
+          <img ng-src="{{$chip.imageUrl}}" alt="{{$chip.name}}" ng-if="$chip.imageUrl" />
+        </div>
+        <div class="md-contact-name">
+          {{$chip.name}}
+        </div>
+        </md-chip-template>
+      </md-chips>
+      <md-list class="fixedRows">
+        <md-subheader class="md-no-sticky">All Users</md-subheader>
+        <md-list-item class="md-2-line contact-item" ng-repeat="(index, user) in allUsers"
+          ng-if="selected.indexOf(user) < 0">
+          <img ng-src="{{user.imageUrl}}" class="md-avatar" alt="{{user.name}}" />
+          <div class="md-list-item-text compact">
+            <h3>{{user.name}}</h3>
+            <p>{{user.email}}</p>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line contact-item selected" ng-repeat="(index, user) in selected">
+          <img ng-src="{{user.imageUrl}}" class="md-avatar" alt="{{contact.name}}" />
+          <div class="md-list-item-text compact">
+            <h3>{{user.name}}</h3>
+            <p>{{user.email}}</p>
+          </div>
+        </md-list-item>
+      </md-list>
+      <md-subheader class="md-no-sticky">Selected</md-subheader>
+      <md-contact-chips
+        ng-model="selected"
+        md-contacts="querySearch($query)"
+        md-contact-name="name"
+        md-contact-image="imageUrl"
+        md-contact-email="email"
+        md-require-match="true"
+        placeholder="Find by name or email...">
+      </md-contact-chips>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions layout="row">
+    <md-button ng-click="cancel()">
+      Cancel
+    </md-button>
+    <md-button class="md-primary md-raised" ng-click="done()" ng-disabled="pending">
+      Add Selected Users
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>
