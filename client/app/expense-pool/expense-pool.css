@@ -73,3 +73,7 @@ pools .md-chips:not(.md-readonly) {
 .members-list .fixedRows {
   height: 250px;
 }
+
+.expense-list .md-contact-chips .md-chips .md-chip {
+  padding: 0;
+}
