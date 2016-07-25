@@ -11,9 +11,8 @@ export default app => {
   app.set('port', config.port);
   app.set('ip', config.ip);
   app.set('clientPath', `${config.root}/client`);
-
-  app.use(morgan('dev'));
   app.use(express.static(app.get('clientPath')));
+  app.use(morgan('dev'));
   app.use(compression());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));

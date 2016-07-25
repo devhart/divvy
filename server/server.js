@@ -7,6 +7,11 @@ import express from 'express';
 import db from './db';
 
 const app = express();
+const log = message => {
+  /* eslint-disable no-console */
+  console.log(message);
+  /* eslint-enable no-console */
+};
 
 configExpress(app);
 configRoutes(app);
@@ -14,7 +19,7 @@ configRoutes(app);
 db.sync()
   .then(() => {
     app.listen(app.get('port'), app.get('ip'), () => {
-      console.log(`Listening on port ${app.get('port')} in ${app.get('env')} mode...`);
+      log(`Listening on port ${app.get('port')} in ${app.get('env')} mode...`);
     });
   })
-  .catch(err => console.log('Server failed to start:', err));
+  .catch(err => log(`Server failed to start: ${err}`));
