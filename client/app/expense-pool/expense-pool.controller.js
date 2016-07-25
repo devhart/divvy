@@ -30,27 +30,25 @@ app.controller('ExpensePoolListCtrl', function PoolsCtrl($scope, $mdDialog, $sta
   };
 });
 
-app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $stateParams, ExpensePool, Expense) {
+app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $mdMedia, $stateParams, ExpensePool) {
   ExpensePool.get({ expensePoolId: $stateParams.expensePoolId }).$promise.then(function handleResponse(pool) {
     $scope.pool = pool;
   });
 
   $scope.addExpense = function addExpense(e) {
-    // TODO: Update this with custom template to include amount
-    var addExpenseOptions = $mdDialog.prompt()
-      .title('Add a new expense')
-      .textContent('Choose a name...')
-      .placeholder('Expense name')
-      .ariaLabel('Expense name')
-      .targetEvent(e)
-      .ok('Create!')
-      .cancel('Cancel');
-
-    $mdDialog.show(addExpenseOptions).then(function handleOk(result) {
+    $mdDialog.show({
+      controller: 'AddExpensePoolExpenseDialogCtrl',
+      templateUrl: 'app/expense-pool/expense/expense.add-dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: e,
+      clickOutsideToClose: true,
+      fullscreen: $mdMedia('sm') || $mdMedia('xs'),
+      locals: {
+        expensePool: $scope.pool
+      }
+    }).then(function handleHide(result) {
       if (result) {
-        Expense.save({ expensePoolId: $scope.pool._id }, { name: result }).$promise.then(function handleSave(response) {
-          $scope.pool.Expenses.unshift(response);
-        });
+        $scope.pool.Expenses.unshift(result);
       }
     });
   };

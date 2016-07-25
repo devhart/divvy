@@ -17,10 +17,12 @@ html, body, #wrapper {
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
-.md-dialog-container > * {
-  flex: 1 1 0;
-}
-
 .md-dialog-container md-input-container {
   width: 100%;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+
+md-dialog {
+  flex: 1;
 }
