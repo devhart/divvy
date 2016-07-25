@@ -4,12 +4,14 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import lazypipe from 'lazypipe';
 import nodemon from 'nodemon';
 import runSequence from 'run-sequence';
+import del from 'del';
 
 const plugins = gulpLoadPlugins();
 const paths = {
   client: {
     scripts: ['client/**/*.js', '!**/bower_components/**/*'],
-    css: ['client/app/**/*.css'],
+    css: ['client/{app,assets}/**/*.css'],
+    html: ['client/{app,assets}/**/*.html'],
     indexHtml: ['client/index.html']
   },
   server: {
@@ -96,11 +98,23 @@ gulp.task('lint:client:scripts', () => {
     .pipe(lintClientScripts());
 });
 
+gulp.task('lint:client:scripts:errorbreak', () => {
+  return gulp.src(paths.client.scripts)
+    .pipe(lintClientScripts())
+    .pipe(plugins.eslint.failAfterError());
+});
+
 gulp.task('lint:server', ['lint:server:scripts', 'lint:server:tests']);
 
 gulp.task('lint:server:scripts', () => {
   return gulp.src(paths.server.scripts)
     .pipe(lintServerScripts());
+});
+
+gulp.task('lint:server:scripts:errorbreak', () => {
+  return gulp.src(paths.server.scripts)
+    .pipe(lintServerScripts())
+    .pipe(plugins.eslint.failAfterError());
 });
 
 gulp.task('lint:server:tests', () => {
@@ -148,7 +162,7 @@ gulp.task('inject:js', () => {
 
 gulp.task('inject:css', () => {
   return gulp.src(paths.client.indexHtml)
-    .pipe(plugins.inject(gulp.src(paths.client.css, { read: false }),
+    .pipe(plugins.inject(gulp.src(_.union(paths.client.css, ['!client/assets/**/*.css']), { read: false }),
       {
         starttag: '<!-- injector:css -->',
         endtag: '<!-- endinjector -->',
@@ -181,6 +195,43 @@ gulp.task('test:server', cb => {
 gulp.task('mocha:unit', () => {
   return gulp.src(paths.server.tests.unit)
     .pipe(mocha());
+});
+
+gulp.task('clean', () => {
+  return del([`${paths.dist}/!(.git*)**`], { dot: true });
+});
+
+gulp.task('copy:extras', () => {
+  gulp.src([
+      'package.json',
+      'bower.json',
+      '.bowerrc',
+      '.gitignore'
+    ], { cwdbase: true })
+    .pipe(gulp.dest(paths.dist));
+});
+
+/** For now just copy the client to the dist folder. */
+gulp.task('copy:client', () => {
+  gulp.src(_.union(paths.client.scripts, paths.client.css, paths.client.html, paths.client.indexHtml))
+    .pipe(gulp.dest(`${paths.dist}/client`));
+});
+
+gulp.task('build', cb => {
+  runSequence(
+    [
+      'lint:server:scripts:errorbreak',
+      'lint:client:scripts:errorbreak',
+    ],
+    'clean',
+    'transpile:server',
+    'inject',
+    'wiredep',
+    [
+      'copy:extras',
+      'copy:client',
+    ],
+    cb);
 });
 
 gulp.task('default', cb => {
