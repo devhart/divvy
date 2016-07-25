@@ -66,7 +66,6 @@ app.controller('ExpensePoolDetailCtrl', function PoolsCtrl($scope, $mdDialog, $m
         expensePool: $scope.pool
       }
     }).then(function handleHide(results) {
-      console.log(results);
       if (results && results.length) {
         [].push.apply($scope.pool.Users, results);
       }
