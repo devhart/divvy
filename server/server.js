@@ -1,5 +1,9 @@
 // Require for use with ES6
-import 'babel-polyfill';
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+  /* eslint-disable global-require */
+  require('babel-polyfill');
+  /* eslint-enable global-require */
+}
 
 import configExpress from './config/express';
 import configRoutes from './routes';
