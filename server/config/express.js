@@ -1,7 +1,6 @@
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
-import errorHandler from 'errorhandler';
 import express from 'express';
 import morgan from 'morgan';
 
@@ -19,6 +18,8 @@ export default app => {
   app.use(cookieParser());
 
   if (app.get('env') === 'development' || app.get('env') === 'test') {
-    app.use(errorHandler());
+    /* eslint-disable global-require */
+    app.use(require('errorhandler')());
+    /* eslint-enable global-require */
   }
 };

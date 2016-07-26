@@ -2,7 +2,7 @@ export default {
   ip: process.env.IP,
   port: process.env.PORT || 8080,
   sequelize: {
-    // TODO: Use process.env.<DATABASE URI FROM HEROKU> here isntead of sqlite://
+    // TODO: Use process.env.<DATABASE URI FROM HEROKU> here instead of sqlite://
     uri: 'sqlite://',
     options: {
       logging: false,
