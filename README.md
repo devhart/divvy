@@ -39,17 +39,17 @@ Divvy allows users to enter expenses as they are incurred, and calculates the be
 4. [Team](#team)
 5. [Contributing](#contributing)
 
-## Usage (tbd)
-
-> Some usage instructions
-
-## Requirements (tbd)
+## Requirements
 
 - Node 6.3.0
+- NPM 3.10.3
 
 ## Development
 
-### Installing Dependencies (tbd)
+### Installing Dependencies
+
+1. To download NPM dependencies, enter "npm install" into the command line.
+2. To download Bower dependencies, enter "bower install" into the command line.
 
 ### Setting Up passport-facebook
 
@@ -71,6 +71,24 @@ Divvy allows users to enter expenses as they are incurred, and calculates the be
 14. Copy the "App ID" and replace `FACEBOOK_ID`'s value with the copied value.
 15. Click the "Show" button for "App Secret". Enter your Facebook password to display the value. Copy the shown value and into the `.env.js` file as the `FACEBOOK_SECRET`.
 16. With the dev server running, navigating to `http://localhost:3000/auth/facebook` redirects the browser to Facebook and ask for app authorization. Once authorized, the browser redirects to `http://localhost:3000/auth/facebook/callback` with a `code` query param (logged on the server). The browser then redirects to the application root.
+
+## Deployment (Heroku)
+
+1. Run `gulp build` in the command line to create a "dist" folder that will be deployed to Heroku.
+2. Navigate into the "dist" folder using the terminal.
+3. Create a deployment remote using `Heroku Create`.
+4. Use 'https://dashboard.heroku.com/apps' to view your new remote. You can change the app name at this step if necessary. You will have to update both the Heroku website name & the remote path name by using `git remote set-url heroku https://git.heroku/APPNAME.git`.
+4. Enter `heroku ps:scale web=1` into the command line to ensure at least one instance is running.
+5. Within the Heroku website, click on your project and navigate to "settings". Click on "Reveal config vars".
+6. Enter NODE_ENV, DOMAIN, SESSION_SECRET, FACEBOOK_ID, and FACEBOOK_SECRET.
+  a. Set NODE_ENV equal to "deployment".
+  b. Set DOMAIN equal to Heroku website link. Ensure there is no trailing "/".
+  c. Set SESSION_SECRET equal to a secure random string. http://randomkeygen.com/. 
+  d. Set FACEBOOK_ID to your facebook ID.
+  e. Set FACEBOOK_SECRET to your facebook secret.
+7. Navigate to your app within Facebook's developer tools. 
+  a. On the navigation bar (left) select "Facebook Login". Scroll down to client OAuth Settings to "Valid OAuth redirect URIs" and enter in your domain (used above) + "auth/facebook/callback". Save changes.
+  b. Under App Review (on left navigation bar), make your app public by selecting "Yes" at the top.
 
 ### Roadmap
 
