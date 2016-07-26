@@ -44,6 +44,7 @@
     "gulp-mocha": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-refresh": "^1.1.0",
+    "gulp-sort": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.8",
