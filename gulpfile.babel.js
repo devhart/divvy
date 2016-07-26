@@ -151,7 +151,8 @@ gulp.task('inject', cb => runSequence('inject:js', 'inject:css', cb));
 
 gulp.task('inject:js', () => {
   return gulp.src(paths.client.indexHtml)
-    .pipe(plugins.inject(gulp.src(_.union(paths.client.scripts, ['!client/app/app.js']), { read: false }),
+    .pipe(plugins.inject(
+      gulp.src(_.union(paths.client.scripts, ['!client/app/app.js']), { read: false }).pipe(plugins.sort()),
       {
         starttag: '<!-- injector:js -->',
         endtag: '<!-- endinjector -->',
@@ -162,7 +163,8 @@ gulp.task('inject:js', () => {
 
 gulp.task('inject:css', () => {
   return gulp.src(paths.client.indexHtml)
-    .pipe(plugins.inject(gulp.src(_.union(paths.client.css, ['!client/assets/**/*.css']), { read: false }),
+    .pipe(plugins.inject(
+      gulp.src(_.union(paths.client.css, ['!client/assets/**/*.css']), { read: false }).pipe(plugins.sort()),
       {
         starttag: '<!-- injector:css -->',
         endtag: '<!-- endinjector -->',
