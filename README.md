@@ -9,7 +9,7 @@ Divvy allows users to enter expenses as they are incurred, and calculates the be
 [![Build Status](https://travis-ci.org/devhart/divvy.svg?branch=master)](https://travis-ci.org/devhart/divvy.svg?branch=master)
 [![Stories in Ready](https://badge.waffle.io/devhart/divvy.png?label=ready&title=Ready)](https://waffle.io/devhart/divvy)
 
-<img src="https://archive.org/download/divvy-login/divvy-login.png" width="300">    <img src="https://archive.org/download/divvy-create-expense-pool/divvy-create-expense-pool.png" width="300">    <img src="https://archive.org/download/divvy-add-user/divvy-add-user.png" width="300">    <img src="https://archive.org/download/divvy-expenses/divvy-expenses.png" width="300">
+<img src="https://archive.org/download/divvy-login/divvy-login.png" width="350">    <img src="https://archive.org/download/divvy-create-expense-pool/divvy-create-expense-pool.png" width="350">    <img src="https://archive.org/download/divvy-add-user/divvy-add-user.png" width="350">    <img src="https://archive.org/download/divvy-expenses/divvy-expenses.png" width="350">
 
 ## Team
 
