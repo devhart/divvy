@@ -1,18 +1,21 @@
-# divvy
-
-#### Hack Reactor Greenfield Project - Expense Splitting App
+# Divvy
+#### Expense Splitting App
 
 ## Description
 Divvying up expenses between friends and peers can be a disaster. Remember that time you went on a trip and one person rented the car and another paid for dinners and a third bought the gas and the beer and then you had to even-up while accounting for tips? Or that time rent was due but someone had purchased all of the groceries and utilities for the month? Enter Divvy.
 
 Divvy allows users to enter expenses as they are incurred, and calculates the best way to settle the bill. No more painful math and messy payments to different people, Divvy simplifies everything down to one payment per person.
 
+Visit the deployed site at [divvy-expenses.herokuapp.com](http://divvy-expenses.herokuapp.com/).
+
 [![Build Status](https://travis-ci.org/devhart/divvy.svg?branch=master)](https://travis-ci.org/devhart/divvy.svg?branch=master)
 [![Stories in Ready](https://badge.waffle.io/devhart/divvy.png?label=ready&title=Ready)](https://waffle.io/devhart/divvy)
 
+<img src="https://archive.org/details/divvy-login" width="300">    <img src="https://archive.org/details/divvy-create-expense-pool" width="300">    <img src="https://archive.org/details/divvy-add-user" width="300">    <img src="https://archive.org/details/divvy-expenses" width="300">
+
 ## Team
 
-  - __Product Owner__: [Hannah Henderson](https://github.com/hchsquared)
+  - __Product Owner__: [Hannah Henderson](https://github.com/hannahhenderson)
   - __Scrum Master__: [James Ramadan](https://github.com/jamesramadan)
   - __Development Team Members__: [Dennis Ting](https://github.com/dting), [Wayne Adams](https://github.com/wayneadams)
 
@@ -48,8 +51,8 @@ Divvy allows users to enter expenses as they are incurred, and calculates the be
 
 ### Installing Dependencies
 
-1. Run npm install from the command line.
-2. Run bower install from the command line.
+1. Run `npm install` from the command line.
+2. Run `bower install` from the command line.
 
 ### Setting Up passport-facebook
 
@@ -75,7 +78,7 @@ Divvy allows users to enter expenses as they are incurred, and calculates the be
 ## Deployment (Heroku)
 Assumes user has a developer account with Heroku. Accounts are free to create for up to five projects.
 
-1. Run gulp build from the root directory.
+1. Run `gulp build` from the root directory.
 2. Change directory to the "dist" folder.
 3. Create a deployment remote using `Heroku Create`.
 4. Use the Heroku [dashboard](https://dashboard.heroku.com/apps) to view new remote.
@@ -95,7 +98,7 @@ Reset remote path name using `git remote set-url heroku https://git.heroku/APPNA
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/devhart/divvy/issues)
+View the project roadmap [here](https://github.com/devhart/divvy/issues).
 
 
 ## Contributing
