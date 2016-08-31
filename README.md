@@ -6,12 +6,10 @@ Divvying up expenses between friends and peers can be a disaster. Remember that 
 
 Divvy allows users to enter expenses as they are incurred, and calculates the best way to settle the bill. No more painful math and messy payments to different people, Divvy simplifies everything down to one payment per person.
 
-Visit the deployed site at [divvy-expenses.herokuapp.com](http://divvy-expenses.herokuapp.com/).
-
 [![Build Status](https://travis-ci.org/devhart/divvy.svg?branch=master)](https://travis-ci.org/devhart/divvy.svg?branch=master)
 [![Stories in Ready](https://badge.waffle.io/devhart/divvy.png?label=ready&title=Ready)](https://waffle.io/devhart/divvy)
 
-<img src="https://archive.org/details/divvy-login" width="300">    <img src="https://archive.org/details/divvy-create-expense-pool" width="300">    <img src="https://archive.org/details/divvy-add-user" width="300">    <img src="https://archive.org/details/divvy-expenses" width="300">
+<img src="https://archive.org/download/divvy-login/divvy-login.png" width="300">    <img src="https://archive.org/download/divvy-create-expense-pool/divvy-create-expense-pool.png" width="300">    <img src="https://archive.org/download/divvy-add-user/divvy-add-user.png" width="300">    <img src="https://archive.org/download/divvy-expenses/divvy-expenses.png" width="300">
 
 ## Team
 
